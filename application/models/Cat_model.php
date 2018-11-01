@@ -16,20 +16,26 @@ class Cat_model extends CI_Model {
 			return false;
 		}
 	}
-	public function addCat(){	
-		$data = array(
-			'member_id' => $this->session->data->member_id,
-			'cat_name' => $this->input->post('cat_name'),
-			'cat_birthdate' => $this->input->post('cat_birthdate'),
-			'cat_sex' => $this->input->post('cat_sex'),
-			'cat_breed' => $this->input->post('cat_breed'),
-			'cat_habit' => $this->input->post('cat_habit'),
-			'cat_status' => $this->input->post('cat_status'),
-			'cat_display' => true,		
+	public function insert($member_id=0){
+		$data_insert = json_decode(file_get_contents('php://input'));
+        if(is_object($data_insert)){	
+			$data = array(
+				'member_id' => $member_id,
+				'cat_name' => $data_insert->cat_name,
+				'cat_birthdate' => $data_insert->cat_birthdate,
+				'cat_sex' => $data_insert->cat_sex,
+				'cat_breed' => $data_insert->cat_breed,
+				'cat_habit' => $data_insert->cat_habit,
+				'cat_status' => $data_insert->cat_status,
+				'cat_description' => $data_insert->cat_description,
+				'cat_display' => true,		
 
-		);
-		$this->db->insert('cat', $data);
-		redirect(base_url('home/profile'));
+			);
+			$this->db->insert('cat', $data);
+			return array('status' => true);
+		}else{
+			return array('status' => false,'msg' => 'Error Incorrect information.');
+		}	
 	}
 	public function editCat(){	
 		$data = array(
@@ -57,7 +63,7 @@ class Cat_model extends CI_Model {
 		}
 		
 	}
-	public function cat_breed(){		
+	public function catbreed(){		
 		 	$query = $this->db->select('*')->from('cat_breed')->get();
 		if ($query->num_rows() > 0) {
 			return $query->result();
@@ -67,14 +73,21 @@ class Cat_model extends CI_Model {
 		}
 	}
 
+	public function provinces(){		
+		$query = $this->db->select('*')->from('provinces')->get();
+   if ($query->num_rows() > 0) {
+	   return $query->result();
+	   
+   }else{
+	   return false;
+   }
+}
+
 	public function showcat($cat_id=0){	
-		$where = array('cat_status' =>  0);
-		if($cat_id>0){	
-			$where['cat_id'] = $cat_id;
-		}	
-		$query = $this->db->get_where('cat',$where);
+		$query = $this->db->select('*')->from('cat')->get();
 		if ($query->num_rows() > 0) {
 			return $query->result();
+			
 		}else{
 			return false;
 		}

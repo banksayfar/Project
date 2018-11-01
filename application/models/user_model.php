@@ -2,8 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
-
-	
 	public function viewprofile(){		
 		 	$query = $this->db->get_where('member', 
 						array(
@@ -16,36 +14,28 @@ class User_model extends CI_Model {
 		}else{
 			return false;
 		}
-	}		
-
-	public function update(){
-		$data = array(
-			'member_displayname' => $this->input->post('member_displayname'),
-			'member_phone' => $this->input->post('member_phone'),
-			'member_status' => $this->input->post('member_status'),
-		);
-		$this->db->where('member_id',$this->session->data->member_id)->update('member', $data);
-		$rs = $this->db->get_where('member', 
-						array(
-							'member_id' =>  $this->session->data->member_id
-						)
-						
-				   	);
-		 $this->session->data = $rs->result()[0];
-
-		redirect(base_url('home/profile'));
 	}
+
 		
-	
-	public function provinces(){		
-		 	$query = $this->db->select('*')->from('provinces')->get();
-		if ($query->num_rows() > 0) {
-			return $query->result();
+	public function update($member_id=0){
+		$data_update = json_decode(file_get_contents('php://input'));
+		if(is_object($data_update)){
+			$data = array(
+				'member_displayname' => $data_update->form->member_displayname,
+				'member_phone' =>$data_update->form->member_phone,
+				'member_status' =>$data_update->form->member_status,
+			);
 			
-		}else{
-			return false;
-		}
+			$this->db->where('member_userid',$member_id)->update('member', $data);
+			
+			
+			
+			return array('status' => true);
+                 
+        }else{
+            return array('status' => false,'msg' => 'Error Incorrect information.');
+        }
 	}
-
-
+	
+	
 }  

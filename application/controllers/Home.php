@@ -28,7 +28,7 @@ class Home extends CI_Controller {
 	public function index()
 	{	
 		$this->load->view('header');
-		$data['showcats']=$this->cats->showcat();
+		// $data['showcats']=$this->cats->showcat();
 		$this->load->view('index',$data);
 		$this->load->view('footer');
 	}
@@ -45,7 +45,7 @@ class Home extends CI_Controller {
 
 		$this->load->view('profile',$data);
 		$this->load->view('cat',$data);
-		$result= $this->cats->delete($cat_id);
+		// $result= $this->cats->delete($cat_id);
 		$this->load->view('footer');
 
 	}
