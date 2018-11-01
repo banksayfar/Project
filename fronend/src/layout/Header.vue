@@ -352,7 +352,6 @@ export default {
         },
         LoadLinklinelogin: async function() {
             await UserStore.dispatch('getLoginLine')
-      
             if(UserStore.state.lineloginline.status){
                 this.linklinelogin = UserStore.state.lineloginline.url;
             }
@@ -364,7 +363,7 @@ export default {
     async mounted () {
         await this.LoadLinklinelogin()
         await this.getUser()
-        await this.getUser()
+        
     },
 }
 </script>

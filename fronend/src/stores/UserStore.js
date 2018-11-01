@@ -41,49 +41,49 @@ const userstore  = new Vuex.Store({
     },
     actions: {
         async loadShowcat(context){
-            let data = await axios.get("http://localhost/bank/api/showcat.php").then((r) => {
+            let data = await axios.get("http://localhost/Project/api/showcat.php").then((r) => {
                 return r.data
             })
             context.commit("setShowcat",data)
         },
         async getLoginLine(context) {
-            let data = await axios.get("http://localhost/bank/api/line/getlinklogin").then((r) => {
+            let data = await axios.get("http://localhost/Project/api/line/getlinklogin").then((r) => {
                 return r.data
             })
             context.commit("getLoginLine", data)
         },
         async getTokenLine(context, options) {
-            let data = await axios.get("http://localhost/bank/api/line/callback?code=" + options.code + "&state=" + options.state).then((r) => {
+            let data = await axios.get("http://localhost/Project/api/line/callback?code=" + options.code + "&state=" + options.state).then((r) => {
                 return r.data
             })
             context.commit("getTokenLine", data)
         },
         async getUser(context, options) {
-            let data = await axios.post("http://localhost/bank/api/line/getUser",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
+            let data = await axios.post("http://localhost/Project/api/line/getUser",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
                 return r.data
             })
             context.commit("getUser", data)
         },
         async getFromsearch(context, options) {
-            let data = await axios.post("http://localhost/bank/api/from/showfrom",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
+            let data = await axios.post("http://localhost/Project/api/from/showfrom",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
                 return r.data
             })
             context.commit("getFromsearch", data)
         },
         async getFromsearch(context, options) {
-            let data = await axios.post("http://localhost/bank/api/from/showfrom",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
+            let data = await axios.post("http://localhost/Project/api/from/showfrom",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
                 return r.data
             })
             context.commit("getFromsearch", data)
         },
         async addCat(context, options) {
-            let data = await axios.post("http://localhost/bank/api/cat/addCat",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
+            let data = await axios.post("http://localhost/Project/api/cat/addCat",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
                 return r.data
             })
             context.commit("addCat", data)
         },
         async UpdateProfile(context, options) {
-            let data = await axios.post("http://localhost/bank/api/user/update",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
+            let data = await axios.post("http://localhost/Project/api/user/update",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
                 return r.data
             })
             context.commit("UpdateProfile", data)

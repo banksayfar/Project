@@ -436,7 +436,7 @@
  <!-- notice modal -->
 <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-notice">
-<form>
+
     <div class="modal-content card card-signup ">
       <div class="modal-header">
         <button type="button" to="" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>                       
@@ -509,7 +509,7 @@
           <button type="submit" @click="addCat();" class="btn btn-primary btn-simple btn-wd btn-lg">Submit</button>
         </div>
     </div>
-    </form>
+   
   </div>
 </div>
 <!-- end notice modal -->
@@ -566,8 +566,7 @@ export default {
             await UserStore.dispatch("addCat", optionts);
              console.log(UserStore.state.addCat);
             if (UserStore.state.addCat.status == 200) {
-                
-               
+
             } else if (UserStore.state.addCat.status == 400) {
                 router.push("/logout");
             }
@@ -576,8 +575,8 @@ export default {
 
     },
     async mounted () {
-        await this.getFromsearch() 
-        
+        await this.getFromsearch(),
+        await this.addCat()
        
     },
 }
