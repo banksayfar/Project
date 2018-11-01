@@ -494,22 +494,21 @@
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        <input type="text" class="form-control" placeholder="img..."  v-model="form.img" required>
+                        <input type="text" class="form-control" placeholder="img..."  v-model="form.cat_img" required>
               </div>
               <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        <input type="text" class="form-control" placeholder="description..." v-model="form.description" required>
+                        <input type="text" class="form-control"   placeholder="description..." v-model="form.cat_description" required>
               </div>
             
         </div>
       </div>
         <div class="modal-footer text-center">
-          <button type="submit" @click="addCat();" class="btn btn-primary btn-simple btn-wd btn-lg">Submit</button>
+          <button @click="addCat();" data-dismiss="modal" class="btn btn-primary btn-simple btn-wd btn-lg">Submit</button>
         </div>
     </div>
-   
   </div>
 </div>
 <!-- end notice modal -->
@@ -566,7 +565,7 @@ export default {
             await UserStore.dispatch("addCat", optionts);
              console.log(UserStore.state.addCat);
             if (UserStore.state.addCat.status == 200) {
-
+                this.getFromsearch();
             } else if (UserStore.state.addCat.status == 400) {
                 router.push("/logout");
             }

@@ -44,7 +44,6 @@ export default {
     await this.getTokenLine()
     if(localStorage.access_token) router.push('/')
     else router.push('/')
-    await this.getUser()
   },
 }
 </script>

@@ -246,7 +246,7 @@
 </div>
 <!--  End Modal -->
 <!-- notice modal -->
-<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-notice">
 <form action="">
     <div class="modal-content card card-signup ">
@@ -300,6 +300,7 @@
                         </span>
                         <input type="text" class="form-control" placeholder="habit..." required>
                    </div>
+                   
                 </div>
             </div>
              <div class="input-group">

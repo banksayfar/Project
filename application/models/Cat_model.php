@@ -21,14 +21,15 @@ class Cat_model extends CI_Model {
         if(is_object($data_insert)){	
 			$data = array(
 				'member_id' => $member_id,
-				'cat_name' => $data_insert->cat_name,
-				'cat_birthdate' => $data_insert->cat_birthdate,
-				'cat_sex' => $data_insert->cat_sex,
-				'cat_breed' => $data_insert->cat_breed,
-				'cat_habit' => $data_insert->cat_habit,
-				'cat_status' => $data_insert->cat_status,
-				'cat_description' => $data_insert->cat_description,
-				'cat_display' => true,		
+				'cat_name' => $data_insert->form->cat_name,
+				'cat_birthdate' => $data_insert->form->cat_birthdate,
+				'cat_sex' => $data_insert->form->cat_sex,
+				'cat_breed' => $data_insert->form->cat_breed,
+				'cat_habit' => $data_insert->form->cat_habit,
+				'cat_status' => $data_insert->form->cat_status,
+				'cat_description' => $data_insert->form->cat_description,
+				'cat_display' => true,
+				
 
 			);
 			$this->db->insert('cat', $data);

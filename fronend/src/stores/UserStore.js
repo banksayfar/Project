@@ -31,7 +31,7 @@ const userstore  = new Vuex.Store({
         getFromsearch(state, data) {
             state.fromsearch = data
         },
-        addCats(state, data) {
+        addCat(state, data) {
             state.addCat = data
         },
         UpdateProfile(state, data) {
