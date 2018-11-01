@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="page-header - clear-filter" data-parallax="true" style="background-image: url('assets/img/bg0.jpg');">
+    <div class="page-header - clear-filter" data-parallax="true" style="background-image: url('/assets/img/bg0.jpg');">
             <br><br><br>
 
     </div>
@@ -226,11 +226,11 @@
                         <div class="row">
                         <div class="col-md-4" v-for="showcats in showcat" :key="showcats">
                                 <div class="card card-product card-plain no-shadow " data-colored-shadow="false" >
-                                <a href="/product/">
+                                <a :href="'/product'+'/'+showcats.cat_id">
                                
                                 <div class="card-image">
                                     
-                                        <img src="assets/img/cat/1.jpg" />
+                                        <img src="/assets/img/cat/1.jpg" />
                                         </div>
                                 
                                     </a>
@@ -280,7 +280,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                    <div class="card card-background" style="background-image: url(assets/img/examples/chris9.jpg)">
+                    <div class="card card-background" style="background-image: url(/assets/img/examples/chris9.jpg)">
                             <div class="card-content">
                                 <h6 class="category text-info">Productivy Apps</h6>
                                     <a href="#pablo">
@@ -297,7 +297,7 @@
                     </div>
 
                     <div class="col-md-4">
-                    <div class="card card-background" style="background-image: url(assets/img/examples/color3.jpg)">
+                    <div class="card card-background" style="background-image: url(/assets/img/examples/color3.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Fashion News</h6>
                             <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
@@ -312,7 +312,7 @@
                     </div>
 
                     <div class="col-md-4">
-                    <div class="card card-background" style="background-image: url(assets/img/examples/chris1.jpg)">
+                    <div class="card card-background" style="background-image: url(/assets/img/examples/chris1.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Productivy Apps</h6>
                                 <a href="#pablo">
@@ -329,7 +329,7 @@
                     </div>
 
                     <div class="col-md-6">
-                    <div class="card card-background" style="background-image: url(assets/img/dg3.jpg)">
+                    <div class="card card-background" style="background-image: url(/assets/img/dg3.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Tutorials</h6>
                                 <a href="#pablo">
@@ -346,7 +346,7 @@
                     </div>
 
                     <div class="col-md-6">
-                    <div class="card card-background" style="background-image: url(assets/img/dg1.jpg)">
+                    <div class="card card-background" style="background-image: url(/assets/img/dg1.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Productivy Style</h6>
                                 <a href="#pablo">
@@ -374,9 +374,9 @@
                     <div class="card card-blog">
                         <div class="card-image">
                             <a href="#pablo">
-                                <img src="assets/img/dg6.jpg" alt="">
+                                <img src="/assets/img/dg6.jpg" alt="">
                             </a>
-                        <div class="colored-shadow" style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
+                        <div class="colored-shadow" style="background-image: url(&quot;/assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
                         <div class="card-content">
                             <h6 class="category text-rose">Trends</h6>
                             <h4 class="card-title">
@@ -395,9 +395,9 @@
                     <div class="card card-blog">
                         <div class="card-image">
                             <a href="#pablo">
-                                <img src="assets/img/dg10.jpg" alt="">
+                                <img src="/assets/img/dg10.jpg" alt="">
                             </a>
-                        <div class="colored-shadow" style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
+                        <div class="colored-shadow" style="background-image: url(&quot;/assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
                         <div class="card-content">
                             <h6 class="category text-rose">Fashion week</h6>
                             <h4 class="card-title">
@@ -416,9 +416,9 @@
                     <div class="card card-blog">
                         <div class="card-image">
                             <a href="#pablo">
-                                <img src="assets/img/dg9.jpg" alt="">
+                                <img src="/assets/img/dg9.jpg" alt="">
                             </a>
-                        <div class="colored-shadow" style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
+                        <div class="colored-shadow" style="background-image: url(&quot;/assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
                         <div class="card-content">
                             <h6 class="category text-rose">Fashion week</h6>
                             <h4 class="card-title">

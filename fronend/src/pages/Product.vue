@@ -1,7 +1,7 @@
 <template>
     <div>
-<body class="product-page">
-    <div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('assets/img/bg6.jpg');">
+<div class="product-page">
+    <div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/assets/img/bg6.jpg');">
     </div>
 
     <div class="section section-gray">
@@ -11,37 +11,37 @@
                     <div class="col-md-6 col-sm-6 ">
                        <div class="tab-content">
                             <div class="tab-pane  " id="product-page1">
-                                 <img src="assets/img/cat/1.jpg" class="catimgs"/>
+                                 <img src="/assets/img/cat/1.jpg" class="catimgs"/>
                               </div>
                               <div class="tab-pane active " id="product-page2">
-                                  <img src="assets/img/cat/A2.jpg" class="catimgs"/>
+                                  <img src="/assets/img/cat/A2.jpg" class="catimgs"/>
                              </div>
                               <div class="tab-pane " id="product-page3">
-                                  <img src="assets/img/cat/A3.jpg"   class="catimgs"/>
+                                  <img src="/assets/img/cat/A3.jpg"   class="catimgs"/>
                               </div>
                               <div class="tab-pane " id="product-page4">
-                                  <img src="assets/img/cat/A4.jpg"  class="catimgs"/>
+                                  <img src="/assets/img/cat/A4.jpg"  class="catimgs"/>
                               </div>
                         </div>
                         <ul class="nav flexi-nav " role="tablist" id="flexiselDemo1">
                             <li>
                                 <a href="#product-page1 " role="tab" data-toggle="tab" aria-expanded="false">
-                                    <img src="assets/img/cat/1.jpg" class="catimg"/>
+                                    <img src="/assets/img/cat/1.jpg" class="catimg"/>
                                 </a>
                             </li>
                             <li class="active">
                                 <a href="#product-page2" role="tab" data-toggle="tab" aria-expanded="false">
-                                    <img src="assets/img/cat/A2.jpg" class="catimg"/>
+                                    <img src="/assets/img/cat/A2.jpg" class="catimg"/>
                                 </a>
                             </li>
                             <li>
                                 <a href="#product-page3" role="tab" data-toggle="tab" aria-expanded="false">
-                                    <img src="assets/img/cat/A3.jpg" class="catimg" />
+                                    <img src="/assets/img/cat/A3.jpg" class="catimg" />
                                 </a>
                             </li>
                             <li>
                                 <a href="#product-page4" role="tab" data-toggle="tab" aria-expanded="true">
-                                    <img src="assets/img/cat/A4.jpg" class="catimg"/>
+                                    <img src="/assets/img/cat/A4.jpg" class="catimg"/>
                                 </a>
                             </li>
                         </ul>
@@ -175,7 +175,7 @@
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
-                                    <img class="img" src="assets/img/examples/card-product1.jpg" />
+                                    <img class="img" src="/assets/img/examples/card-product1.jpg" />
                                 </a>
                             </div>
 
@@ -207,7 +207,7 @@
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
-                                    <img class="img" src="assets/img/examples/card-product3.jpg" />
+                                    <img class="img" src="/assets/img/examples/card-product3.jpg" />
                                 </a>
                             </div>
 
@@ -239,7 +239,7 @@
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
-                                    <img class="img" src="assets/img/examples/card-product4.jpg" />
+                                    <img class="img" src="/assets/img/examples/card-product4.jpg" />
                                 </a>
                             </div>
 
@@ -269,7 +269,7 @@
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
-                                    <img class="img" src="assets/img/examples/card-product2.jpg" />
+                                    <img class="img" src="/assets/img/examples/card-product2.jpg" />
                                 </a>
                             </div>
 
@@ -302,7 +302,7 @@
         </div>
     </div>
 
-</body>
+</div>
 
     </div>
 </template>
