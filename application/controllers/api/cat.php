@@ -11,11 +11,11 @@ class Cat extends Line{
     public function addCat(){
         $user = $this->getUser();
         if($user['status'] == 200){
-            $result=$this->cat->insert($user['user']['member_userid']);
+            $result=$this->cat->insert($user['user']['member_id']);
             if($result['status']){
                 $output = array(
                     'status' => 200,
-                    'msg' => 'CREATED'
+                    'msg' => 'CREATED CAT'
                 );
             }else{
                 $output = array(
@@ -31,4 +31,5 @@ class Cat extends Line{
             die(json_encode($output));
         }
     }
+    
 }

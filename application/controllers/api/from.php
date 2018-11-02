@@ -13,7 +13,7 @@ class From extends Line{
         if($user['status'] == 200){
             $output = array(
                 'status' => 200,
-                'provinces' => $this->cat->showcat(),
+                'provinces' => $this->cat->provinces(),
                 'catbreed' => $this->cat->catbreed(),
                 'showcat' => $this->cat->showcat(),
             );

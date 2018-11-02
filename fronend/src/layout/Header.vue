@@ -21,7 +21,7 @@
                              </router-link>
                     </li>
 
-                    <li class="dropdown">
+                    <!-- <li class="dropdown">
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                  <i class="material-icons">view_day</i> Sections
                                  <b class="caret"></b>
@@ -70,9 +70,9 @@
 
                              </ul>
                     </li>
-                    
+                     -->
 
-                    <li class="dropdown">
+                    <!-- <li class="dropdown">
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                  <i class="material-icons">view_carousel</i> Examples
                                  <b class="caret"></b>
@@ -135,7 +135,7 @@
                                  </li>
                              </ul>
                     </li>
-                    
+                     -->
                     
                         
                                     <li>
@@ -145,24 +145,22 @@
                                        </router-link>
                                     </li>
                                     <li>
-                                        <a href="#pablo">
+                                        <!-- <a href="#pablo">
                                                  <i class="material-icons">settings</i>
                                                  Settings
-                                        </a>
+                                        </a> -->
                                          </li>
                     
                   
                       <li class="button-container" v-if="user.member_id != null" >
-                            <a href="" class="profile-photo dropdown-toggle btn btn-cray btn-round" data-toggle="dropdown"  > 
-                                 <img :src="user.member_pictureurl" alt="Circle Image" class="img-circle profile-photo-small"  style="height:25px"> 
-                                     {{ user.member_displayname }}
+                            <a href="" class="profile-photo dropdown-toggle btn-round" data-toggle="dropdown" style="margin-top: 12px" > 
+                                 <img :src="user.member_pictureurl" alt="Circle Image" class="img-circle profile-photo-small"  style="height:30px"> 
+                                    {{ user.member_displayname }}
                                 <i class="material-icons">keyboard_arrow_down</i>
                             </a>
                                 
                                     <ul class="dropdown-menu">
-                                        <li class="dropdown-header">
-                                            Dropdown header
-                                        </li>
+                                        
                                         <li>
                                             <router-link to="/profile">Me</router-link>
                                         </li>

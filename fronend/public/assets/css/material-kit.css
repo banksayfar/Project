@@ -3321,12 +3321,12 @@ fieldset[disabled] .navbar .btn-link:focus {
 .navbar.navbar-transparent {
     background-color: transparent;
     box-shadow: none;
-    color: #fff;
-    padding-top: 25px;
+    color: rgb(255, 85, 218);
+    padding-top: 10px;
 }
 
 .navbar.navbar-transparent .logo-container .brand {
-    color: #FFFFFF;
+    color: rgb(255, 255, 255);
 }
 
 .navbar-fixed-top {

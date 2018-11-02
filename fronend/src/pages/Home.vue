@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="page-header - clear-filter" data-parallax="true" style="background-image: url('/assets/img/bg0.jpg');">
+    <div class="page-header" data-parallax="true" style="background-image: url('assets/img/background/1.jpg');width: 100%;height: 580px;">
             <br><br><br>
 
     </div>
@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div class="panel panel-default panel-rose">
+                                <!-- <div class="panel panel-default panel-rose">
                                     <div class="panel-heading" role="tab" id="headingFour">
                                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                             <h4 class="panel-title">นิสัย</h4>
@@ -107,7 +107,7 @@
                                             
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="panel panel-default panel-rose">
                                     <div class="panel-heading" role="tab" id="headingThree">
                                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -119,7 +119,7 @@
                                         <div class="panel-body">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" value="" data-toggle="checkbox" checked="">
+                                                    <input type="checkbox" data-toggle="checkbox" checked="">
                                                     All
                                                 </label>
                                             </div>
@@ -226,20 +226,20 @@
                         <div class="row">
                         <div class="col-md-4" v-for="showcats in showcat" :key="showcats">
                                 <div class="card card-product card-plain no-shadow " data-colored-shadow="false" >
-                                <a :href="'/product'+'/'+showcats.cat_id">
+                            <a :href="'/product'+'/'+showcats.cat_id">
                                
                                 <div class="card-image">
                                     
-                                        <img src="/assets/img/cat/1.jpg" />
+                                        <img src="assets/img/cat/1.jpg" />
                                         </div>
                                 
                                     </a>
                                     <div class="card-content">
                                 
-                                        <h4 class="card-title"></h4>
-                               
+                                        <h4 class="card-title">    {{showcats.cat_name}}</h4>
+
                                     <p class="description" style="white-space: normal;width:100%;height: 60px;overflow: hidden;">
-                                          {{showcats.cat_id}}  {{showcats.cat_description}}
+                                          {{showcats.cat_description}}
                                     </p>
                                     <div class="footer">
                                         <!-- <div class="price-container">
@@ -280,7 +280,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                    <div class="card card-background" style="background-image: url(/assets/img/examples/chris9.jpg)">
+                    <div class="card card-background" style="background-image: url(assets/img/examples/chris9.jpg)">
                             <div class="card-content">
                                 <h6 class="category text-info">Productivy Apps</h6>
                                     <a href="#pablo">
@@ -297,7 +297,7 @@
                     </div>
 
                     <div class="col-md-4">
-                    <div class="card card-background" style="background-image: url(/assets/img/examples/color3.jpg)">
+                    <div class="card card-background" style="background-image: url(assets/img/examples/color3.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Fashion News</h6>
                             <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
@@ -312,7 +312,7 @@
                     </div>
 
                     <div class="col-md-4">
-                    <div class="card card-background" style="background-image: url(/assets/img/examples/chris1.jpg)">
+                    <div class="card card-background" style="background-image: url(assets/img/examples/chris1.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Productivy Apps</h6>
                                 <a href="#pablo">
@@ -329,7 +329,7 @@
                     </div>
 
                     <div class="col-md-6">
-                    <div class="card card-background" style="background-image: url(/assets/img/dg3.jpg)">
+                    <div class="card card-background" style="background-image: url(assets/img/dg3.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Tutorials</h6>
                                 <a href="#pablo">
@@ -346,7 +346,7 @@
                     </div>
 
                     <div class="col-md-6">
-                    <div class="card card-background" style="background-image: url(/assets/img/dg1.jpg)">
+                    <div class="card card-background" style="background-image: url(assets/img/dg1.jpg)">
                         <div class="card-content">
                             <h6 class="category text-info">Productivy Style</h6>
                                 <a href="#pablo">
@@ -374,9 +374,9 @@
                     <div class="card card-blog">
                         <div class="card-image">
                             <a href="#pablo">
-                                <img src="/assets/img/dg6.jpg" alt="">
+                                <img src="assets/img/dg6.jpg" alt="">
                             </a>
-                        <div class="colored-shadow" style="background-image: url(&quot;/assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
+                        <div class="colored-shadow" style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
                         <div class="card-content">
                             <h6 class="category text-rose">Trends</h6>
                             <h4 class="card-title">
@@ -395,9 +395,9 @@
                     <div class="card card-blog">
                         <div class="card-image">
                             <a href="#pablo">
-                                <img src="/assets/img/dg10.jpg" alt="">
+                                <img src="assets/img/dg10.jpg" alt="">
                             </a>
-                        <div class="colored-shadow" style="background-image: url(&quot;/assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
+                        <div class="colored-shadow" style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
                         <div class="card-content">
                             <h6 class="category text-rose">Fashion week</h6>
                             <h4 class="card-title">
@@ -416,9 +416,9 @@
                     <div class="card card-blog">
                         <div class="card-image">
                             <a href="#pablo">
-                                <img src="/assets/img/dg9.jpg" alt="">
+                                <img src="assets/img/dg9.jpg" alt="">
                             </a>
-                        <div class="colored-shadow" style="background-image: url(&quot;/assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
+                        <div class="colored-shadow" style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"></div><div class="ripple-container"></div></div>
                         <div class="card-content">
                             <h6 class="category text-rose">Fashion week</h6>
                             <h4 class="card-title">
@@ -456,64 +456,101 @@
                         </span>
                         <input type="text" class="form-control" placeholder="Name..." v-model="form.cat_name" required>
                    </div>
-                    <div class="input-group">
+                   
+                     <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
+                             
                         </span>
-                        <input type="text" class="form-control" placeholder="sex..." v-model="form.cat_sex" required>
-                   </div>
-                    <div class="input-group">
+                      
+									<select class="form-control" v-model="form.cat_sex" >
+                                        <option value="เพศผู้">เพศผู้</option>
+                                        <option value="เพศเมีย">เพศเมีย</option>                                 
+                                    </select>
+                                    
+                          
+                     </div>
+                     <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="breed.." v-model="form.cat_breed" required>
+                        </span> 
+                       <!--  -->
+                      
+									<select class="form-control" v-model="form.cat_provinces" >
+                                        <option v-for="province in provinces" :key="province.id" :value="province.id" >{{province.name_th}}</option>
+                                                                  
+                                    </select>
+								
                    </div>
+                   
                 </div>
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        <input type="text" class="form-control" placeholder="birthdate..." v-model="form.cat_birthdate" required>
+                        <input type="date" class="form-control datetimepicker"  placeholder="birthdate..." v-model="form.cat_birthdate" >
                    </div>
                     <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        <input type="text" class="form-control" placeholder="status..." v-model="form.cat_status" required>
+                        	    <select class="form-control" v-model="form.cat_breed" >
+                                        <option v-for="catbreeds in catbreed" :key="catbreeds" :value="catbreeds.catbreed_id" >{{catbreeds.breed_name}}</option>
+                                                                  
+                                    </select>
                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                             <i class="material-icons">face</i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="habit..." v-model="form.cat_habit" required>
+                    
                    </div>
-                </div>
-            </div>
-             <div class="input-group">
-                        <span class="input-group-addon">
+                   <br>
+                     <div class="col-md-12">
+            <div class="form-group form-file-upload is-empty is-fileinput">
+                     <div class="col-md-2">
                              <i class="material-icons">face</i>
-                        </span>
-                        <input type="text" class="form-control" placeholder="img..."  v-model="form.cat_img" required>
-              </div>
+                        </div>
+                        <div class="col-md-10">
+								<input type="file" id="inputFile2" multiple="" accept="image/*">
+								<div class="input-group">
+									<input type="text" readonly="" class="form-control" placeholder="Single File">
+									<span class="input-group-btn input-group-s">
+										<button type="button" class="btn btn-just-icon btn-round btn-primary">
+											<i class="material-icons">attach_file</i>
+										</button>
+									</span>
+								</div>
+							<span class="material-input"></span>
+                            </div>
+               </div>
+                 </div>
+        
+              
+               <div class="col-md-12">
               <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        <input type="text" class="form-control"   placeholder="description..." v-model="form.cat_description" required>
+                        <textarea type="text" class="form-control" placeholder="รายละเอียด..." v-model="form.cat_description" rows="6" required>
+
+
+                        </textarea>
               </div>
+              </div>
+            </div>
+             
             
         </div>
       </div>
         <div class="modal-footer text-center">
-          <button @click="addCat();" data-dismiss="modal" class="btn btn-primary btn-simple btn-wd btn-lg">Submit</button>
+          <button  @click="addCat();" data-dismiss="modal" class="btn btn-primary btn-simple btn-wd btn-lg">Submit</button>
         </div>
     </div>
+
+   
   </div>
 </div>
 <!-- end notice modal -->
-
 </div>
+
 
 </template>
 
@@ -527,8 +564,9 @@ export default {
           provinces :[],
           catbreed :[],
           showcat:[],
+          user:[],
           form:{
-              cat_status:null,
+              cat_provinces:null,
               cat_name:null,
               cat_sex:null,
               cat_birthdate:null,
@@ -536,8 +574,11 @@ export default {
               cat_img:null,
               cat_habit:null,
               cat_description:null,
-          }
-      }
+              member_id:null
+          },
+   
+  
+    }
     },
     methods: {
         getFromsearch: async function() {
@@ -556,8 +597,11 @@ export default {
                 router.push("/logout");
             }
         },
+  
         addCat: async function() {
             if (!localStorage.access_token) router.push("/");
+            this.form.member_id =this.user.member_id;
+          
             let optionts = {
                 access_token: localStorage.access_token,
                 form: this.form
@@ -569,13 +613,33 @@ export default {
             } else if (UserStore.state.addCat.status == 400) {
                 router.push("/logout");
             }
-        }
+        },
+        getUser: async function() {
+            if (!localStorage.access_token) router.push("/");
+            let optionts = {
+                access_token: localStorage.access_token
+            };
+            await UserStore.dispatch("getUser", optionts);
+            if (UserStore.state.user.status == 200) {
+                this.user = UserStore.state.user.user;
+            } else if (UserStore.state.user.status == 400) {
+                router.push("/logout");
+            }
+        },
+        LoadLinklinelogin: async function() {
+            await UserStore.dispatch('getLoginLine')
+            if(UserStore.state.lineloginline.status){
+                this.linklinelogin = UserStore.state.lineloginline.url;
+            }
+        },
+    
+    
         
 
     },
     async mounted () {
-        await this.getFromsearch(),
-        await this.addCat()
+        await this.getFromsearch()
+        await this.getUser()
        
     },
 }

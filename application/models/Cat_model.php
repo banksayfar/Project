@@ -25,8 +25,9 @@ class Cat_model extends CI_Model {
 				'cat_birthdate' => $data_insert->form->cat_birthdate,
 				'cat_sex' => $data_insert->form->cat_sex,
 				'cat_breed' => $data_insert->form->cat_breed,
-				'cat_habit' => $data_insert->form->cat_habit,
-				'cat_status' => $data_insert->form->cat_status,
+				
+				'cat_provinces' => $data_insert->form->cat_provinces,
+				'cat_status' => 'ว่าง',
 				'cat_description' => $data_insert->form->cat_description,
 				'cat_display' => true,
 				

@@ -36,6 +36,5 @@ class User_model extends CI_Model {
             return array('status' => false,'msg' => 'Error Incorrect information.');
         }
 	}
-	
-	
+
 }  

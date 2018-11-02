@@ -261,7 +261,7 @@
       <div class="modal-header">
         <button type="button" to="" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>                       
          <div class="header header-primary text-center">
-            <h4 class="card-title">ADD CAT</h4>
+            <h4 class="card-title">Edit Profile</h4>
             
        </div>
       </div>
@@ -277,7 +277,7 @@
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        <input type="text" class="form-control"  v-model="user.member_userid" value="user.member_userid"  required>
+                        <input type="text" class="form-control" style="color:red"  v-model="user.member_userid" value="user.member_userid" disabled required>
                    </div>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -351,7 +351,7 @@ export default {
             await UserStore.dispatch("UpdateProfile", optionts);
              console.log(UserStore.state.update);
             if (UserStore.state.update.status == 200) {
-                
+                this.getUser('Header');
             } else if (UserStore.state.update.status == 400) {
                 router.push("/logout");
             }

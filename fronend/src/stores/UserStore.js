@@ -11,7 +11,8 @@ const userstore  = new Vuex.Store({
         lineloginline: [],
         fromsearch:[],
         addCat:[],
-        update:[]
+        update:[],
+        showuser:[]
 
     },
     mutations: {
@@ -36,6 +37,9 @@ const userstore  = new Vuex.Store({
         },
         UpdateProfile(state, data) {
             state.update = data
+        },
+        showUser(state, data) {
+            state.showuser = data
         }
         
     },
@@ -70,12 +74,6 @@ const userstore  = new Vuex.Store({
             })
             context.commit("getFromsearch", data)
         },
-        async getFromsearch(context, options) {
-            let data = await axios.post("http://localhost/Project/api/from/showfrom",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
-                return r.data
-            })
-            context.commit("getFromsearch", data)
-        },
         async addCat(context, options) {
             let data = await axios.post("http://localhost/Project/api/cat/addCat",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
                 return r.data
@@ -87,6 +85,12 @@ const userstore  = new Vuex.Store({
                 return r.data
             })
             context.commit("UpdateProfile", data)
+        },
+        async showUser(context){
+            let data = await axios.get("http://localhost/Project/api/user/showuser",options,{headers : {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}}).then((r) => {
+                return r.data
+            })
+            context.commit("showUser",data)
         },
         
         

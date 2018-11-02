@@ -30,5 +30,6 @@ class user extends Line{
             header('Access-Control-Allow-Origin: *');
             die(json_encode($output));
         }
-}
+    }   
+     
 }
