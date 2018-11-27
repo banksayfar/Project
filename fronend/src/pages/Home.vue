@@ -462,21 +462,20 @@
                              <i class="material-icons">face</i>
                              
                         </span>
-                      
-									<select class="form-control" v-model="form.cat_sex" >
-                                        <option value="เพศผู้">เพศผู้</option>
-                                        <option value="เพศเมีย">เพศเมีย</option>                                 
+									<select class="form-control datetimepicker" v-model="form.cat_sex" data-style="select-with-transition" title="กรุณาเลิอกเพศ" data-size="7" tabindex="-98" >
+                                        <option selected disabled>กรุณาเลิอกเพศ</option>
+                                        <option value="เพศผู้" @click="form.cat_sex = 'เพศผู้'">เพศผู้</option>
+                                        <option value="เพศเมีย" @click="form.cat_sex = 'เพศเมีย'">เพศเมีย</option>                                 
                                     </select>
-                                    
                           
                      </div>
                      <div class="input-group">
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
-                        </span> 
-                       <!--  -->
-                      
-									<select class="form-control" v-model="form.cat_provinces" >
+                        </span>
+
+									<select class="form-control" v-model="form.cat_provinces" data-style="select-with-transition" title="กรุณาเลิอกจังหวัด" data-size="7" tabindex="-98">
+                                        <option selected disabled>กรุณาเลิอกจังหวัด</option>
                                         <option v-for="province in provinces" :key="province.id" :value="province.id" >{{province.name_th}}</option>
                                                                   
                                     </select>
@@ -495,35 +494,30 @@
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-                        	    <select class="form-control" v-model="form.cat_breed" >
-                                        <option v-for="catbreeds in catbreed" :key="catbreeds" :value="catbreeds.catbreed_id" >{{catbreeds.breed_name}}</option>
-                                                                  
-                                    </select>
+                        	    <select class="form-control " v-model="form.cat_breed" data-style="select-with-transition" title="กรุณาเลิอกสายพันธ์" data-size="7" tabindex="-98">
+                                         <option selected disabled>กรุณาเลิอกสายพันธ์</option>
+                                        <option v-for="catbreeds in catbreed" :key="catbreeds" :value="catbreeds.catbreed_id" @click="form.cat_breed">{{catbreeds.breed_name}}</option>                          
+                                </select>
                    </div>
                     
-                   </div>
-                   <br>
-                     <div class="col-md-12">
-            <div class="form-group form-file-upload is-empty is-fileinput">
-                     <div class="col-md-2">
+                     <div class="input-group">
+                        <span class="input-group-addon">
                              <i class="material-icons">face</i>
-                        </div>
-                        <div class="col-md-10">
-								<input type="file" id="inputFile2" multiple="" accept="image/*">
+                        </span>
+                        	
+                      <div class="form-group form-file-upload">
+								<input type="file" id="inputFile1" multiple="">
 								<div class="input-group">
-									<input type="text" readonly="" class="form-control" placeholder="Single File">
-									<span class="input-group-btn input-group-s">
-										<button type="button" class="btn btn-just-icon btn-round btn-primary">
-											<i class="material-icons">attach_file</i>
-										</button>
-									</span>
+									<input type="text" readonly="" class="form-control" placeholder="Simple chooser..." multiple="">
 								</div>
-							<span class="material-input"></span>
-                            </div>
-               </div>
-                 </div>
+							</div>
+                     </div>
+                   </div>
+                   
+                   
+                     
         
-              
+         
                <div class="col-md-12">
               <div class="input-group">
                         <span class="input-group-addon">
@@ -555,92 +549,95 @@
 </template>
 
 <script>
-import UserStore from '@/stores/UserStore'
-import router from '@/router'
+import UserStore from "@/stores/UserStore";
+import router from "@/router";
 export default {
-    name: 'Home', 
-    data(){
-      return {
-          provinces :[],
-          catbreed :[],
-          showcat:[],
-          user:[],
-          form:{
-              cat_provinces:null,
-              cat_name:null,
-              cat_sex:null,
-              cat_birthdate:null,
-              cat_breed:null,
-              cat_img:null,
-              cat_habit:null,
-              cat_description:null,
-              member_id:null
-          },
-   
-  
-    }
+  name: "Home",
+  data() {
+    return {
+      provinces: [],
+      catbreed: [],
+      showcat: [],
+      user: [],
+      form: {
+        cat_provinces: "กรุณาเลิอกจังหวัด",
+        cat_name: null,
+        cat_sex: "กรุณาเลิอกเพศ",
+        cat_birthdate: null,
+        cat_breed: "กรุณาเลิอกสายพันธ์",
+        cat_img: null,
+        cat_habit: null,
+        cat_description: null,
+        member_id: null
+      }
+    };
+  },
+  methods: {
+    getFromsearch: async function() {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("getFromsearch", optionts);
+      console.log(UserStore.state.fromsearch);
+      if (UserStore.state.fromsearch.status == 200) {
+        this.provinces = UserStore.state.fromsearch.provinces;
+        this.catbreed = UserStore.state.fromsearch.catbreed;
+        this.showcat = UserStore.state.fromsearch.showcat;
+      } else if (UserStore.state.fromsearch.status == 400) {
+        router.push("/logout");
+      }
     },
-    methods: {
-        getFromsearch: async function() {
-            if (!localStorage.access_token) router.push("/");
-            let optionts = {
-                access_token: localStorage.access_token
-            };
-            await UserStore.dispatch("getFromsearch", optionts);
-             console.log(UserStore.state.fromsearch);
-            if (UserStore.state.fromsearch.status == 200) {
-                this.provinces = UserStore.state.fromsearch.provinces;
-                this.catbreed = UserStore.state.fromsearch.catbreed;
-                 this.showcat = UserStore.state.fromsearch.showcat;
-               
-            } else if (UserStore.state.fromsearch.status == 400) {
-                router.push("/logout");
-            }
-        },
-  
-        addCat: async function() {
-            if (!localStorage.access_token) router.push("/");
-            this.form.member_id =this.user.member_id;
-          
-            let optionts = {
-                access_token: localStorage.access_token,
-                form: this.form
-            };
-            await UserStore.dispatch("addCat", optionts);
-             console.log(UserStore.state.addCat);
-            if (UserStore.state.addCat.status == 200) {
-                this.getFromsearch();
-            } else if (UserStore.state.addCat.status == 400) {
-                router.push("/logout");
-            }
-        },
-        getUser: async function() {
-            if (!localStorage.access_token) router.push("/");
-            let optionts = {
-                access_token: localStorage.access_token
-            };
-            await UserStore.dispatch("getUser", optionts);
-            if (UserStore.state.user.status == 200) {
-                this.user = UserStore.state.user.user;
-            } else if (UserStore.state.user.status == 400) {
-                router.push("/logout");
-            }
-        },
-        LoadLinklinelogin: async function() {
-            await UserStore.dispatch('getLoginLine')
-            if(UserStore.state.lineloginline.status){
-                this.linklinelogin = UserStore.state.lineloginline.url;
-            }
-        },
-    
-    
-        
 
+    addCat: async function() {
+      if (!localStorage.access_token) router.push("/");
+      this.form.member_id = this.user.member_id;
+
+      let optionts = {
+        access_token: localStorage.access_token,
+        form: this.form
+      };
+      await UserStore.dispatch("addCat", optionts);
+      console.log(UserStore.state.addCat);
+      if (UserStore.state.addCat.status == 200) {
+        this.getFromsearch();
+        this.form={
+        cat_provinces: "กรุณาเลิอกจังหวัด",
+        cat_name: null,
+        cat_sex: "กรุณาเลิอกเพศ",
+        cat_birthdate: null,
+        cat_breed: "กรุณาเลิอกสายพันธ์",
+        cat_img: null,
+        cat_habit: null,
+        cat_description: null,
+        member_id: null
+        }
+      } else if (UserStore.state.addCat.status == 400) {
+        router.push("/logout");
+      }
     },
-    async mounted () {
-        await this.getFromsearch()
-        await this.getUser()
-       
+    getUser: async function() {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("getUser", optionts);
+      if (UserStore.state.user.status == 200) {
+        this.user = UserStore.state.user.user;
+      } else if (UserStore.state.user.status == 400) {
+        router.push("/logout");
+      }
     },
-}
+    LoadLinklinelogin: async function() {
+      await UserStore.dispatch("getLoginLine");
+      if (UserStore.state.lineloginline.status) {
+        this.linklinelogin = UserStore.state.lineloginline.url;
+      }
+    }
+  },
+  async mounted() {
+    await this.getFromsearch();
+    await this.getUser();
+  }
+};
 </script>

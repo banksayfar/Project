@@ -322,48 +322,42 @@
 </template>
 
 <script>
-import UserStore from '@/stores/UserStore'
+import UserStore from "@/stores/UserStore";
 
 export default {
-    name: 'header',
-    components: {
+  name: "header",
+  components: {},
+  data() {
+    return {
+      user: [],
+      linklinelogin: null
+    };
+  },
+  methods: {
+    getUser: async function() {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("getUser", optionts);
 
-    },
-    data(){
-      return {
-          user : [],
-          linklinelogin:null,
+      if (UserStore.state.user.status == 200) {
+        this.user = UserStore.state.user.user;
+      } else if (UserStore.state.user.status == 400) {
+        router.push("/logout");
       }
     },
-    methods: {
-        getUser: async function() {
-            if (!localStorage.access_token) router.push("/");
-            let optionts = {
-                access_token: localStorage.access_token
-            };
-            await UserStore.dispatch("getUser", optionts);
-         
-            if (UserStore.state.user.status == 200) {
-                this.user = UserStore.state.user.user;
-            } else if (UserStore.state.user.status == 400) {
-                router.push("/logout");
-            }
-        },
-        LoadLinklinelogin: async function() {
-            await UserStore.dispatch('getLoginLine')
-            if(UserStore.state.lineloginline.status){
-                this.linklinelogin = UserStore.state.lineloginline.url;
-            }
-        },
-    
-    
-        
-    },
-    async mounted () {
-        await this.LoadLinklinelogin()
-        await this.getUser()
-        
-    },
-}
+    LoadLinklinelogin: async function() {
+      await UserStore.dispatch("getLoginLine");
+      if (UserStore.state.lineloginline.status) {
+        this.linklinelogin = UserStore.state.lineloginline.url;
+      }
+    }
+  },
+  async mounted() {
+    await this.LoadLinklinelogin();
+    await this.getUser();
+  }
+};
 </script>
 

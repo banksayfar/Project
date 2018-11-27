@@ -315,54 +315,48 @@
 </div>
 </template>
 <script>
-import UserStore from '@/stores/UserStore'
-import router from '@/router'
+import UserStore from "@/stores/UserStore";
+import router from "@/router";
 export default {
-    name: 'profile',
-    components: {
-        
-    },
-    data(){
-      return {
-          user : [],
+  name: "profile",
+  components: {},
+  data() {
+    return {
+      user: []
+    };
+  },
+  methods: {
+    getUser: async function() {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("getUser", optionts);
+
+      if (UserStore.state.user.status == 200) {
+        this.user = UserStore.state.user.user;
+      } else if (UserStore.state.user.status == 400) {
+        router.push("/logout");
       }
     },
-    methods: {
-        getUser: async function() {
-            if (!localStorage.access_token) router.push("/");
-            let optionts = {
-                access_token: localStorage.access_token
-            };
-            await UserStore.dispatch("getUser", optionts);
-         
-            if (UserStore.state.user.status == 200) {
-                this.user = UserStore.state.user.user;
-            } else if (UserStore.state.user.status == 400) {
-                router.push("/logout");
-            }
-        },
-        UpdateProfile: async function() {
-            if (!localStorage.access_token) router.push("/");
-            let optionts = {
-                access_token: localStorage.access_token,
-                form: this.user
-            };
-            // console.log(optionts);
-            await UserStore.dispatch("UpdateProfile", optionts);
-             console.log(UserStore.state.update);
-            if (UserStore.state.update.status == 200) {
-                this.getUser('Header');
-            } else if (UserStore.state.update.status == 400) {
-                router.push("/logout");
-            }
-        }
-       
-    
-    
-        
-    },
-    async mounted () {
-        await this.getUser()
-    },
-}
+    UpdateProfile: async function() {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token,
+        form: this.user
+      };
+      // console.log(optionts);
+      await UserStore.dispatch("UpdateProfile", optionts);
+      console.log(UserStore.state.update);
+      if (UserStore.state.update.status == 200) {
+        this.getUser("Header");
+      } else if (UserStore.state.update.status == 400) {
+        router.push("/logout");
+      }
+    }
+  },
+  async mounted() {
+    await this.getUser();
+  }
+};
 </script>

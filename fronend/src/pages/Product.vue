@@ -47,7 +47,7 @@
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <h2 class="title"> Polo </h2>
+                        <h2 class="title"> {{viewcat_s.cat_name}} </h2>
                         <!-- <h3 class="main-price">$335</h3> -->
                         <div id="acordeon">
                             <div class="panel-group" id="accordion">
@@ -63,22 +63,14 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                               <div class="panel-body">
                                 <p>
- น้องแมวที่มีนิสัยแบบนี้จะติดคน และติดบ้านมาก ชอบนอนบนตักอุ่นๆ หรือบนหมอนเดียวกันกับเราเวลานอน ไม่ว่ามนุษย์ขยับไปไหนจะมีเจ้าเหมียวน้อยติดสอยห้อยตามไปทุกที่ น้องแมวจะคอยอยู่เคียงข้างเสมอ เรียกว่าตัวติดกันเป็นปาท่องโก๋ ไปไหนไปด้วยทั่วบ้านอย่างแน่นอน.</p>
+                                        {{viewcat_s.cat_description}}</p>
                               </div>
                             </div>
                           </div>
-                          <div class="panel panel-border panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-controls="collapseOne">
-                                    <h4 class="panel-title">
-                                    ประวัติ
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                    </h4>
-                                </a>
-                            </div>
+                          
                             <div id="collapseTwo" class="panel-collapse collapse">
                               <div class="panel-body">
-                                An infusion of West Coast cool and New York attitude, Rebecca Minkoff is synonymous with It girl style. Minkoff burst on the fashion scene with her best-selling 'Morning After Bag' and later expanded her offering with the Rebecca Minkoff Collection - a range of luxe city staples with a "downtown romantic" theme.
+                              
                               </div>
                             </div>
                           </div>
@@ -106,23 +98,27 @@
 
                         </div>
                         </div><!--  end acordeon -->
-
+                    
                         <div class="row pick-size">
-                            <div class="col-md-6 col-sm-6">
-                                <label>สี</label>
-                                <select class="selectpicker" data-style="select-with-transition" data-size="7">
-                                    <option value="1">เหลือง,ขาว </option>
-                                    <option value="2">Gray</option>
-                                    <option value="3">White</option>
-                                </select>
+                            <div class="col-md-3 col-sm-3">
+                                 <label>สายพันธ์</label>
+                                   	<p type="text" class="form-control">{{viewcat_s.breed_name}}</p>
                             </div>
-                            <div class="col-md-6 col-sm-6">
-                                <label>อายุ</label>
-                                <select class="selectpicker" data-style="select-with-transition" data-size="7">
-                                    <option value="1">9 เดือน</option>
-                                    <option value="2">Medium</option>
-                                    <option value="3">Large</option>
-                                </select>
+                            <div class="col-md-3 col-sm-3">
+                                <label>จังหวัด</label>
+                                   	<p type="text" class="form-control">{{viewcat_s.name_th}}</p>
+                            </div>
+                           
+                            <div class="col-md-3 col-sm-3">
+                                 <br>
+                                 <label>อายุ</label>
+                               	<p type="text" class="form-control">{{viewcat_s.age}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                 <br>
+                                 <label>เพส</label>
+                               	<p type="text" class="form-control">{{viewcat_s.cat_sex}}</p>
+                            </div>
                             </div>
                         </div>
                         <div class="row text-right">
@@ -302,16 +298,40 @@
         </div>
     </div>
 
-</div>
-
-    </div>
-</template>
-<script>
-
+    
+     </template>
+ <script>
+import UserStore from "@/stores/UserStore";
+import router from "@/router";
 export default {
+  name: "product",
+  components: {},
+  data() {
+    return {
+      viewcat_s: []
+    };
+  },
+  methods: {
+    viewcat: async function() {
+        console.log("ll");
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+          id : this.$route.params.id,
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("viewcat", optionts);
+      console.log(UserStore.state.viewcat);
+      if (UserStore.state.viewcat.status == 200) {
+        this.viewcat_s = UserStore.state.viewcat.viewcat;
+        
+      } else if (UserStore.state.viewcat.status == 400) {
+        router.push("/");
+      }
+    }
+  },
+   async mounted() {
+    await this.viewcat(); 
+  },
 
-  name: 'product',
-  components: {
-  }
-}
+};
 </script>

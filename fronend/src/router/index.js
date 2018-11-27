@@ -7,9 +7,6 @@ import showcat from '@/pages/showcat'
 import addcat from '@/pages/addcat'
 import Home from '@/pages/Home'
 import Profile from '@/pages/user/Profile' 
-import Review from '@/pages/user/Review'
-import Mycat from '@/pages/user/Mycat'
-import Image from '@/pages/user/Image'
 import Product from '@/pages/Product'
 import callback from '@/pages/callback'
 
@@ -40,16 +37,11 @@ const routes = [
             default: Profile,
             footer: Footer
         },
-        children: [
-            
-        { path : '' , name:'review', component : Review },
-        { path : '/Profile/Mycat' , name:'Mycat', component : Mycat },
-        { path : '/Profile/Image' , name:'Image', component : Image },
-        ]
+      
     },
     { 
-        path: '/Product/:id',
-        name: 'Product',
+        path: '/product/:id',
+        name: 'product',
         components: {
             header: Header,
             default: Product,
