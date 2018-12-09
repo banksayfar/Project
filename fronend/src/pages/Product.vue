@@ -98,26 +98,25 @@
 
                         </div>
                         </div><!--  end acordeon -->
-                    
-                        <div class="row pick-size">
+                    <div class="row pick-size">
                             <div class="col-md-3 col-sm-3">
-                                 <label>สายพันธ์</label>
-                                   	<p type="text" class="form-control">{{viewcat_s.breed_name}}</p>
+                              <label>สายพันธ์</label>
+                            <p type="text" class="form-control">{{viewcat_s.breed_name}}</p>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                 <label>จังหวัด</label>
-                                   	<p type="text" class="form-control">{{viewcat_s.name_th}}</p>
+                                   <p type="text" class="form-control">{{viewcat_s.name_th}}</p>
                             </div>
                            
                             <div class="col-md-3 col-sm-3">
                                  <br>
                                  <label>อายุ</label>
-                               	<p type="text" class="form-control">{{viewcat_s.age}}</p>
+                               <p type="text" class="form-control">{{viewcat_s.age}}</p>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                  <br>
                                  <label>เพส</label>
-                               	<p type="text" class="form-control">{{viewcat_s.cat_sex}}</p>
+                               <p type="text" class="form-control">{{viewcat_s.cat_sex}}</p>
                             </div>
                             </div>
                         </div>
@@ -313,14 +312,13 @@ export default {
   },
   methods: {
     viewcat: async function() {
-        console.log("ll");
+      
       if (!localStorage.access_token) router.push("/");
       let optionts = {
           id : this.$route.params.id,
         access_token: localStorage.access_token
       };
       await UserStore.dispatch("viewcat", optionts);
-      console.log(UserStore.state.viewcat);
       if (UserStore.state.viewcat.status == 200) {
         this.viewcat_s = UserStore.state.viewcat.viewcat;
         

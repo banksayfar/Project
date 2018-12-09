@@ -13,7 +13,12 @@ const userstore = new Vuex.Store({
         addCat: [],
         update: [],
         showuser: [],
-        viewcat :[]
+        viewcat :[],
+        mycat :[],
+        EditCat:[],
+        show_editcat:[],
+        search:[],
+        delete:[]
 
     },
     mutations: {
@@ -33,6 +38,9 @@ const userstore = new Vuex.Store({
         getFromsearch(state, data) {
             state.fromsearch = data
         },
+        getEditCat(state, data) {
+            state.EditCat = data
+        },
         addCat(state, data) {
             state.addCat = data
         },
@@ -44,6 +52,18 @@ const userstore = new Vuex.Store({
         },
         viewcat(state, data) {
             state.viewcat = data
+        },
+        mycat(state, data) {
+            state.mycat = data
+        },
+        show_editcat(state, data) {
+            state.show_editcat = data
+        },
+        getsearch(state, data){
+            state.search = data
+        },
+        getdelete(state, data){
+            state.delete = data
         }
 
     },
@@ -78,6 +98,18 @@ const userstore = new Vuex.Store({
             })
             context.commit("getFromsearch", data)
         },
+        async getEditCat(context, options) {
+            let data = await axios.post("http://localhost/Project/api/cat/EditCat/"+options.cat_id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("EditCat", data)
+        },
+        async getdelete(context, options) {
+            let data = await axios.post("http://localhost/Project/api/cat/delete/"+options.cat_id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("delete", data)
+        },
         async addCat(context, options) {
             let data = await axios.post("http://localhost/Project/api/cat/addCat", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
@@ -85,7 +117,7 @@ const userstore = new Vuex.Store({
             context.commit("addCat", data)
         },
         async UpdateProfile(context, options) {
-            let data = await axios.post("http://localhost/Project/api/user/update", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post("http://localhost/Project/api/user/update/"+options.id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("UpdateProfile", data)
@@ -102,9 +134,24 @@ const userstore = new Vuex.Store({
             })
             context.commit("viewcat", data)
         },
-
-
-
+        async mycat(context,options) {
+            let data = await axios.post("http://localhost/Project/api/cat/mycat",options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("mycat", data)
+        },
+        async show_editcat(context,options) {
+            let data = await axios.post("http://localhost/Project/api/cat/show_editcat/"+options.cat_id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("show_editcat", data)
+        },
+        async search(context,options) {
+            let data = await axios.post("http://localhost/Project/api/cat/search/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("getsearch", data)
+        },
     }
 })
 

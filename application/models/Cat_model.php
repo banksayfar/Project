@@ -1,108 +1,198 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Cat_model extends CI_Model {
-	public function viewcat(){		
-		$query = $this->db->get_where('cat', 
-						array(
-							'member_id' =>  $this->session->data->member_id,
-							'cat_display' =>  true ,
-						)
-			);
+class Cat_model extends CI_Model
+{
+	public function viewcat($member_id, $id)
+	{
+		// SELECT * FROM `cat` 
+		// INNER JOIN cat_breed ON cat.cat_breed =cat_breed.catbreed_id 
+		// INNER JOIN provinces ON cat.cat_provinces = provinces.id
+		$this->db->select('*');
+		$this->db->from('cat');
+		$this->db->join('cat_breed', 'cat.cat_breed = cat_breed.catbreed_id');
+		$this->db->join('provinces', 'cat.cat_provinces = provinces.id');
+		$this->db->where(
+			array(
+				'cat_id' => $id,
+				'member_id' => $member_id
+			)
+		);
+		$query = $this->db->get();
+
 		if ($query->num_rows() > 0) {
-			return $query->result();
-				
-		}else{
+			return $query->result()[0];
+
+		} else {
 			return false;
 		}
 	}
-	public function insert($member_id=0){
+	public function insert($member_id = 0)
+	{
 		$data_insert = json_decode(file_get_contents('php://input'));
-        if(is_object($data_insert)){	
+
+
+		if (is_object($data_insert)) {
 			$data = array(
 				'member_id' => $member_id,
 				'cat_name' => $data_insert->form->cat_name,
 				'cat_birthdate' => $data_insert->form->cat_birthdate,
 				'cat_sex' => $data_insert->form->cat_sex,
 				'cat_breed' => $data_insert->form->cat_breed,
-				
+
 				'cat_provinces' => $data_insert->form->cat_provinces,
 				'cat_status' => 'ว่าง',
 				'cat_description' => $data_insert->form->cat_description,
-				'cat_display' => true,
-				
-
+				'cat_display' => 1,
 			);
 			$this->db->insert('cat', $data);
 			return array('status' => true);
-		}else{
-			return array('status' => false,'msg' => 'Error Incorrect information.');
-		}	
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
 	}
-	public function editCat(){	
-		$data = array(
-			
-			'cat_name' => $this->input->post('cat_name'),
-			'cat_birthdate' => $this->input->post('cat_birthdate'),
-			'cat_sex' => $this->input->post('cat_sex'),
-			'cat_breed' => $this->input->post('cat_breed'),
-			'cat_habit' => $this->input->post('cat_habit'),
-			'cat_status' => $this->input->post('cat_status'),
-					
-		);
 
-		$this->db->where('cat_id',$this->input->post('cat_id'))->update('cat', $data);
-		redirect(base_url('home/profile'));
+	public function showcountCat()
+	{
+		$query = $this->db->select('COUNT(member_id) as countT')->from('cat')->where('member_id', $this->session->data->member_id)->get();
 
-	}
-	public function showcountCat(){
-	$query = $this->db->select('COUNT(member_id) as countT')->from('cat')->where('member_id',$this->session->data->member_id)->get();
-	
 		if ($query->num_rows() > 0) {
-			return $query->result()[0]->countT; 
-		}else{
+			return $query->result()[0]->countT;
+		} else {
 			return false;
 		}
-		
+
 	}
-	public function catbreed(){		
-		 	$query = $this->db->select('*')->from('cat_breed')->get();
+	public function catbreed()
+	{
+		$query = $this->db->select('*')->from('cat_breed')->get();
 		if ($query->num_rows() > 0) {
 			return $query->result();
-			
-		}else{
+
+		} else {
 			return false;
 		}
 	}
 
-	public function provinces(){		
+	public function provinces()
+	{
 		$query = $this->db->select('*')->from('provinces')->get();
-   if ($query->num_rows() > 0) {
-	   return $query->result();
-	   
-   }else{
-	   return false;
-   }
-}
-
-	public function showcat($cat_id=0){	
-		$query = $this->db->select('*')->from('cat')->get();
 		if ($query->num_rows() > 0) {
 			return $query->result();
-			
-		}else{
+
+		} else {
 			return false;
 		}
 	}
 
-	public function delete($cat_id=0){
-		$data = array(
-					`cat_display` => false,
-		);
+	public function showcat($page)
+	{
+		$path = ($page * 9) - 9;
+		$query = $this->db->select('*')->from('cat')->where('cat_display', 1)->limit(9, $path)->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
 
-	print_r($this->db->where('cat_id',$this->input->get('cat_id'))->update('cat', $data) 
+		} else {
+			return false;
+		}
+	}
+	public function showcatall()
+	{
+		$query = $this->db->select('count(*) as countCat')->from('cat')->where('cat_display', 1)->get();
+		if ($query->num_rows() > 0) {
+			return ceil($query->result()[0]->countCat / 9);
+			//$query->result();
+
+		} else {
+			return 0;
+		}
+	}
+	public function search($type, $page = 1)
+	{
+		$data = json_decode(file_get_contents('php://input'));
+		$this->db->select('*')->from('cat')->where('cat_display', 1);
+		if ($data->search->cat_provinces[0] != 'all') $this->db->where_in('cat_provinces', $data->search->cat_provinces);
+		if ($data->search->cat_sex[0] != 'all') $this->db->where_in('cat_sex', $data->search->cat_sex);
+		if ($data->search->cat_breed[0] != 'all') $this->db->where_in('cat_breed', $data->search->cat_breed);
+		if ($data->search->cat_status[0] != 'all') $this->db->where_in('cat_status', $data->search->cat_status);
+
+		if ($type == 'showcat') {
+			$path = ($page * 9) - 9;
+			$query = $this->db->limit(9, $path)->order_by("cat_id", "DESC")->get();
+			if ($query->num_rows() > 0) {
+				return $query->result();
+			} else {
+				return array();
+			}
+		} else if ($type == 'page_all') {
+			$query = $this->db->get();
+			$num_rows = $query->num_rows();
+			if ($num_rows > 0) {
+				return ceil($num_rows / 9);
+			} else {
+				return 1;
+			}
+		}
+
+	}
+	public function mycat($member_id)
+	{
+		$data = array(
+			'member_id' => $member_id,
+			'cat_display' => 1
 		);
-	
-		redirect(base_url('home/profile'));
+			$query = $this->db->select('*')->from('cat')->where($data)->get();
+		if ($query->num_rows() > 0) {
+			return array('status' => true, 'data' => $query->result());
+
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+	}
+	public function show_editcat($cat_id)
+	{
+		$query = $this->db->select('*')->from('cat')->where('cat_id', $cat_id)->get();
+		if ($query->num_rows() > 0) {
+			return array('status' => true, 'data' => $query->result());
+
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+	}
+
+	public function delete($cat_id = 0)
+	{
+		$data_update = json_decode(file_get_contents('php://input'));
+		if (is_object($data_update)) {
+			$data = array(
+				'cat_display' => 0
+			);
+			$query = $this->db->where('cat_id', $cat_id)->update('cat', $data);
+			return array('status' => true);
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+	}
+	public function EditCat($cat_id = 0)
+	{
+		$data_update = json_decode(file_get_contents('php://input'));
+		print_r($data_update);
+		if (is_object($data_update)) {
+			$data = array(
+
+				'cat_name' => $data_update->edit->cat_name,
+				'cat_sex' => $data_update->edit->cat_sex,
+				'cat_provinces' => $data_update->edit->cat_provinces,
+				'cat_birthdate' => $data_update->edit->cat_birthdate,
+				'cat_breed' => $data_update->edit->cat_breed,
+				'cat_img' => $data_update->edit->cat_img,
+				'cat_description' => $data_update->edit->cat_description,
+			);
+
+			$this->db->where('cat_id', $cat_id)->update('cat', $data);
+			return array('status' => true);
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
 	}
 }
