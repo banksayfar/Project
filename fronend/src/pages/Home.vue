@@ -42,6 +42,7 @@
                       type="reset"
                       rel="tooltip"
                       title="Reset Filter"
+                      @click="reset();"
                     >
                    
                       <i class="material-icons">cached</i>
@@ -269,7 +270,7 @@
                   <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
                     <a :href="'/product'+'/'+showcats.cat_id">
                       <div class="card-image">
-                        <img src="assets/img/cat/1.jpg">
+                        <img src="">
                       </div>
                     </a>
                     <div class="card-content">
@@ -299,19 +300,23 @@
                   </div>
                   <!-- end card -->
                 </div>
-
+              <div id="progress">
                 <div class="col-md-5 col-md-offset-4">
                   <div class="pagination-area text-center">
-                    <ul class="pagination">
+                    <ul class="pagination pagination-primary">
+                         <li><span @click="addsearch(page_now-1);">prev</span></li>
                       <li
                         v-for="page in page_all"
                         :key="page"
                         :class="page_now == page ? 'active':''"
                       >
-                        <span @click="addsearch(page);">{{page}}</span>
+                        <router-link @click="addsearch(page);">{{page}}</router-link>
                       </li>
+                      <li>
+                        <span  v-on:click="addsearch(page_next);">next</span></li>
                     </ul>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -617,7 +622,7 @@
                     </span>
 
                     <div class="form-group form-file-upload">
-                      <input type="file" id="inputFile1" @change="onFileChanged" multiple>
+                      <input type="file" @change="onFileChanged" multiple>
 
                       <div class="input-group">
                         <input
@@ -676,6 +681,7 @@ export default {
       showcat: [],
       page_all: 0,
       page_now: 0,
+      page_next:0,
       user: [],
       search :{
         cat_provinces: ["all"],
@@ -689,17 +695,61 @@ export default {
         cat_sex: "กรุณาเลิอกเพศ",
         cat_birthdate: null,
         cat_breed: "กรุณาเลิอกสายพันธ์",
-        cat_img: null,
+        cat_img: [],
         cat_description: null,
         member_id: null
       }
     };
   },
+  // props: {
+  //     // Support Multiple File?
+  //     multiple: {
+  //       type: Boolean,
+  //       default: false
+  //     },
+  //     // Pass the files info when it's done
+  //     done: {
+  //       type: Function,
+  //       default: () => {}
+  //     }
+  //   },
   methods: {
-    onFileChanged(event) {
-      this.cat_img = event.target.files[0];
-      console.log("this.cat_img", this.cat_img);
-    },
+    onFileChanged(e){
+        // get the files
+        let files = e.target.files;
+        // Process each file
+        this.form.cat_img = []
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          // Make new FileReader
+          let reader = new FileReader()
+          // Convert the file to base64 text
+          reader.readAsDataURL(file)
+          // on reader load somthing...
+          reader.onload = () => {
+            // Make a fileInfo Object
+            let fileInfo = {
+              name: file.name,
+              type: file.type,
+              size: Math.round(file.size / 1000)+' kB',
+              base64: reader.result,
+              file: file
+            }
+
+            // Push it to the state
+            this.form.cat_img.push(fileInfo)
+            console.log(this.form.cat_img)
+            // If all files have been proceed
+            // if(this.form.cat_img.length == files.length){
+            //   // Apply Callback function
+            //   if(this.multiple) this.done(this.form.cat_img)
+            //   else this.done(this.form.cat_img[0])
+            // }
+           
+          } // reader.onload
+        } // for
+
+      }, // onChange()
     getFromsearch: async function() {
       if (!localStorage.access_token) router.push("/");
       let optionts = {
@@ -714,7 +764,7 @@ export default {
         router.push("/logout");
       }
     },
-   addCat: async function() {
+    addCat: async function() {
       if (!localStorage.access_token) router.push("/");
       this.form.member_id = this.user.member_id;
       let optionts = {
@@ -731,7 +781,7 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
-          cat_img: null,
+          cat_img: {},
           cat_habit: null,
           cat_description: null,
           member_id: null
@@ -759,15 +809,28 @@ export default {
       }
     },
     addsearch: async function(id) {
+      if(this.page_now<this.page_all){
+        this.page_next = this.page_now+1
+      }
       let optionts = {
         search: this.search,
         id: id
       };
+      
       await UserStore.dispatch("search", optionts);
       this.page_all = UserStore.state.search.page_all;
       this.page_now = UserStore.state.search.page_now;
       this.showcat = UserStore.state.search.showcat;
-      //  console.log( UserStore.state.search)
+     
+    },
+    
+     reset: async function() {
+     this.search ={
+        cat_provinces: ["all"],
+        cat_sex: ["all"],
+        cat_breed:["all"],
+        cat_status:["all"],
+      }
     },
   },
   async mounted() {

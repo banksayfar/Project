@@ -30,22 +30,36 @@ class Cat_model extends CI_Model
 	public function insert($member_id = 0)
 	{
 		$data_insert = json_decode(file_get_contents('php://input'));
-
-
+		
 		if (is_object($data_insert)) {
+			
 			$data = array(
 				'member_id' => $member_id,
 				'cat_name' => $data_insert->form->cat_name,
 				'cat_birthdate' => $data_insert->form->cat_birthdate,
 				'cat_sex' => $data_insert->form->cat_sex,
 				'cat_breed' => $data_insert->form->cat_breed,
-
 				'cat_provinces' => $data_insert->form->cat_provinces,
 				'cat_status' => 'ว่าง',
 				'cat_description' => $data_insert->form->cat_description,
 				'cat_display' => 1,
 			);
 			$this->db->insert('cat', $data);
+			$cat_id = $this->db->insert_id();
+			$data_cat=$data_insert->form->cat_img;
+
+			$insert_img = array();
+			
+			foreach ($data_cat as $key => $value) {
+				$tmp = array(
+					'name' => $value->name,
+					'type' => $value->type,
+					'base64' => $value->base64,
+					'cat_id' => $cat_id,
+				);
+				array_push($insert_img,$tmp);
+			}
+			$this->db->insert_batch('cat_img', $insert_img);
 			return array('status' => true);
 		} else {
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
@@ -115,10 +129,9 @@ class Cat_model extends CI_Model
 		if ($data->search->cat_sex[0] != 'all') $this->db->where_in('cat_sex', $data->search->cat_sex);
 		if ($data->search->cat_breed[0] != 'all') $this->db->where_in('cat_breed', $data->search->cat_breed);
 		if ($data->search->cat_status[0] != 'all') $this->db->where_in('cat_status', $data->search->cat_status);
-
 		if ($type == 'showcat') {
 			$path = ($page * 9) - 9;
-			$query = $this->db->limit(9, $path)->order_by("cat_id", "DESC")->get();
+			$query = $this->db->limit(9, $path)->order_by("cat.cat_id", "DESC")->get();
 			if ($query->num_rows() > 0) {
 				return $query->result();
 			} else {

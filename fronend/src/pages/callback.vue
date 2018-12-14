@@ -29,7 +29,6 @@ export default {
         code : this.$route.query.code,
         state : this.$route.query.state
       }
-      
       await UserStore.dispatch('getTokenLine',optionts)
       console.log(UserStore.state.access_token);
       if(UserStore.state.access_token.status == 200){
@@ -38,7 +37,6 @@ export default {
         router.push('/')
       }
     },
-    
   },
   async mounted () {
     await this.getTokenLine()
