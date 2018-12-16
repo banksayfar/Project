@@ -60,6 +60,8 @@ class Line extends CI_Controller {
     public function getUser()
     {
         $tmp = json_decode(file_get_contents('php://input'));
+        
+        file_put_contents('log.json',json_encode($tmp),FILE_APPEND);
         if($tmp->access_token){
             $accessToken = $tmp->access_token;
             $getUser = $this->getProfile($accessToken);
@@ -77,7 +79,6 @@ class Line extends CI_Controller {
                 )
             );
             if($rs->num_rows() == 0){
-
                 $insert = array(
                     'member_displayname' => $getUser->displayName,
                     'member_userid' => $getUser->userId,

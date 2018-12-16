@@ -12,22 +12,12 @@ class From extends Line
     }
     public function showfrom()
     {
-        $user = $this->getUser();
-        if ($user['status'] == 200) {
             $output = array(
-                'status' => 200,
                 'provinces' => $this->cat->provinces(),
                 'catbreed' => $this->cat->catbreed(),
-               
             );
             header('Access-Control-Allow-Origin: *');
             die(json_encode($output));
-        } else {
-            $output = array('status' => 400, 'msg' => 'Error access_token');
-            header('Access-Control-Allow-Origin: *');
-            die(json_encode($output));
-        }
+        
     }
-
-
 }

@@ -10,10 +10,10 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6 ">
                        <div class="tab-content">
-                            <div class="tab-pane  " id="product-page1">
-                                 <img src="/assets/img/cat/1.jpg" class="catimgs"/>
-                              </div>
-                              <div class="tab-pane active " id="product-page2">
+                            <div v-for="viewcat in viewcat_s.cat_imgs" :key="viewcat.id" :class="'tab-pane '+(viewcat_s.cat_imgs[0].id == viewcat.id ? 'active':'')"  :id="'product-page'+viewcat.id">
+                                <img :src="viewcat.base64" class="catimgs"/>
+                            </div>
+                              <!-- <div class="tab-pane active " id="product-page2">
                                   <img src="/assets/img/cat/A2.jpg" class="catimgs"/>
                              </div>
                               <div class="tab-pane " id="product-page3">
@@ -21,15 +21,15 @@
                               </div>
                               <div class="tab-pane " id="product-page4">
                                   <img src="/assets/img/cat/A4.jpg"  class="catimgs"/>
-                              </div>
+                              </div> -->
                         </div>
                         <ul class="nav flexi-nav " role="tablist" id="flexiselDemo1">
-                            <li>
-                                <a href="#product-page1 " role="tab" data-toggle="tab" aria-expanded="false">
-                                    <img src="/assets/img/cat/1.jpg" class="catimg"/>
+                            <li v-for="viewcat in viewcat_s.cat_imgs" :key="viewcat.id" :class="(viewcat_s.cat_imgs[0].id == viewcat.id ? 'active':'')">
+                                <a :href="'#product-page'+viewcat.id" role="tab" data-toggle="tab" aria-expanded="false">
+                                    <img :src="viewcat.base64" class="catimg"/>
                                 </a>
                             </li>
-                            <li class="active">
+                            <!-- <li class="active">
                                 <a href="#product-page2" role="tab" data-toggle="tab" aria-expanded="false">
                                     <img src="/assets/img/cat/A2.jpg" class="catimg"/>
                                 </a>
@@ -43,7 +43,7 @@
                                 <a href="#product-page4" role="tab" data-toggle="tab" aria-expanded="true">
                                     <img src="/assets/img/cat/A4.jpg" class="catimg"/>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-6">
@@ -328,8 +328,36 @@ export default {
     }
   },
    async mounted() {
-    await this.viewcat(); 
+    await this.viewcat();
+    $(document).ready(function () {
+        //บนสุด
+        window.scrollTo(0, 0);
+        // setTimeout(function () {
+            ("#flexiselDemo1").flexisel({
+                visibleItems: 3,
+                itemsToScroll: 1,
+                animationSpeed: 400,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 3
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 3
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3
+                    }
+                }
+            });
+        // },3000);
+        
+    });
   },
 
 };
+    
 </script>

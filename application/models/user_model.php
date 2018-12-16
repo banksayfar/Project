@@ -16,7 +16,6 @@ class User_model extends CI_Model {
         }
     }
 
-        
     public function update($member_id=0){
         $data_update = json_decode(file_get_contents('php://input'));
         if(is_object($data_update)){

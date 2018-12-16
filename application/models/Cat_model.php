@@ -3,24 +3,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Cat_model extends CI_Model
 {
-	public function viewcat($member_id, $id)
+	public function viewcat($id)
 	{
 		// SELECT * FROM `cat` 
 		// INNER JOIN cat_breed ON cat.cat_breed =cat_breed.catbreed_id 
 		// INNER JOIN provinces ON cat.cat_provinces = provinces.id
+		// INNER JOIN cat_img ON cat.cat_id = cat_img.cat_id
 		$this->db->select('*');
 		$this->db->from('cat');
 		$this->db->join('cat_breed', 'cat.cat_breed = cat_breed.catbreed_id');
 		$this->db->join('provinces', 'cat.cat_provinces = provinces.id');
-		$this->db->where(
-			array(
-				'cat_id' => $id,
-				'member_id' => $member_id
-			)
-		);
+		$this->db->where('cat_id',$id);
 		$query = $this->db->get();
-
+		$this->db->select('*');
+		$this->db->from('cat_img');
+		$this->db->where('cat_id',$id);
+		$queryimg = $this->db->get();
 		if ($query->num_rows() > 0) {
+			$query->result()[0]->cat_imgs = $queryimg->result();
 			return $query->result()[0];
 
 		} else {
@@ -123,15 +123,17 @@ class Cat_model extends CI_Model
 	}
 	public function search($type, $page = 1)
 	{
+		// INNER JOIN cat on cat_img.cat_id =cat.cat_id GROUP BY cat_img.`cat_id`
 		$data = json_decode(file_get_contents('php://input'));
-		$this->db->select('*')->from('cat')->where('cat_display', 1);
+		$this->db->select('*')->from('cat')->join('cat_img','cat_img.cat_id =cat.cat_id')->where('cat_display', 1);
+		// ->join('cat_img', 'cat.cat_id = cat_img.cat_id')
 		if ($data->search->cat_provinces[0] != 'all') $this->db->where_in('cat_provinces', $data->search->cat_provinces);
 		if ($data->search->cat_sex[0] != 'all') $this->db->where_in('cat_sex', $data->search->cat_sex);
 		if ($data->search->cat_breed[0] != 'all') $this->db->where_in('cat_breed', $data->search->cat_breed);
 		if ($data->search->cat_status[0] != 'all') $this->db->where_in('cat_status', $data->search->cat_status);
 		if ($type == 'showcat') {
 			$path = ($page * 9) - 9;
-			$query = $this->db->limit(9, $path)->order_by("cat.cat_id", "DESC")->get();
+			$query = $this->db->GROUP_BY('cat_img.cat_id')->limit(9, $path)->order_by("cat.cat_id", "DESC")->get();
 			if ($query->num_rows() > 0) {
 				return $query->result();
 			} else {

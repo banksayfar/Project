@@ -25,7 +25,8 @@
     <div class="main main-raised">
       <div class="section">
         <div class="container">
-          <div align="right">
+          
+          <div v-if="isLogin" align="right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#noticeModal">
               <i class="material-icons">add</i>AddCats
             </button>
@@ -268,11 +269,11 @@
               <div class="row">
                 <div class="col-md-4" v-for="showcats in showcat" :key="showcats.id">
                   <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
-                    <a :href="'/product'+'/'+showcats.cat_id">
+                    <router-link :to="'/product'+'/'+showcats.cat_id">
                       <div class="card-image">
-                        <img src="">
+                        <img :src="showcats.base64">
                       </div>
-                    </a>
+                    </router-link>
                     <div class="card-content">
                       <h4 class="card-title">{{showcats.cat_name}}</h4>
                       <p
@@ -310,7 +311,7 @@
                         :key="page"
                         :class="page_now == page ? 'active':''"
                       >
-                        <router-link @click="addsearch(page);">{{page}}</router-link>
+                        <span @click="addsearch(page);">{{page}}</span>
                       </li>
                       <li>
                         <span  v-on:click="addsearch(page_next);">next</span></li>
@@ -698,7 +699,8 @@ export default {
         cat_img: [],
         cat_description: null,
         member_id: null
-      }
+      },
+      isLogin:false
     };
   },
   // props: {
@@ -757,12 +759,8 @@ export default {
       };
       await UserStore.dispatch("getFromsearch", optionts);
       console.log(UserStore.state.fromsearch);
-      if (UserStore.state.fromsearch.status == 200) {
         this.provinces = UserStore.state.fromsearch.provinces;
         this.catbreed = UserStore.state.fromsearch.catbreed;
-      } else if (UserStore.state.fromsearch.status == 400) {
-        router.push("/logout");
-      }
     },
     addCat: async function() {
       if (!localStorage.access_token) router.push("/");
@@ -797,6 +795,7 @@ export default {
       };
       await UserStore.dispatch("getUser", optionts);
       if (UserStore.state.user.status == 200) {
+        this.isLogin = true
         this.user = UserStore.state.user.user;
       } else if (UserStore.state.user.status == 400) {
         router.push("/logout");
@@ -837,6 +836,7 @@ export default {
     await this.getFromsearch();
     await this.getUser();
     await this.addsearch(1);
+    
   }
 };
 </script>

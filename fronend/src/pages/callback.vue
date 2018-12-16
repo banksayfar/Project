@@ -33,8 +33,22 @@ export default {
       console.log(UserStore.state.access_token);
       if(UserStore.state.access_token.status == 200){
           localStorage.access_token = UserStore.state.access_token.access_token;
+          await this.getUser()
       }else{
         router.push('/')
+      }
+    },
+    getUser: async function() {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("getUser", optionts);
+
+      if (UserStore.state.user.status == 200) {
+        router.push("/");
+      } else if (UserStore.state.user.status == 400) {
+        router.push("/logout");
       }
     },
   },

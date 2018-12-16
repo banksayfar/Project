@@ -66,26 +66,21 @@ class Cat extends Line
 
     public function viewcat($id)
     {
-        $user = $this->getUser();
-        if ($user['status'] == 200) {
-            $rs = $this->cat->viewcat($user['user']['member_id'], $id);
-            $date_split = explode("-", $rs->cat_birthdate);
-            $date_now = explode("-", date('Y-m-d', time()));
-            $y = $date_now[0] - $date_split[0];
-            $m = $date_now[1] - $date_split[1];
-            $d = $date_now[2] - $date_split[2];
-            $rs->age = $y . ' ปี ' . $m . ' เดือน ' . $d . ' วัน';
-            $output = array(
-                'status' => 200,
-                'viewcat' => $rs
-            );
-            header('Access-Control-Allow-Origin: *');
-            die(json_encode($output));
-        } else {
-            $output = array('status' => 400, 'msg' => 'Error access_token');
-            header('Access-Control-Allow-Origin: *');
-            die(json_encode($output));
-        }
+        $rs = $this->cat->viewcat($id);
+        $date_split = explode("-", $rs->cat_birthdate);
+        $date_now = explode("-", date('Y-m-d', time()));
+        $y = $date_now[0] - $date_split[0];
+        $m = $date_now[1] - $date_split[1];
+        $d = $date_now[2] - $date_split[2];
+        $rs->age = $y . ' ปี ' . $m . ' เดือน ' . $d . ' วัน';
+        $output = array(
+            'status' => 200,
+            'viewcat' => $rs
+        );
+        header('Access-Control-Allow-Origin: *');
+        die(json_encode($output));
+
+
     }
     public function showcat($page)
     {
@@ -165,7 +160,7 @@ class Cat extends Line
 
     public function delete($cat_id)
     {
-     
+
         header('Access-Control-Allow-Origin: *');
         $user = $this->getUser();
         if ($user['status'] == 200) {
