@@ -7,6 +7,9 @@ class Line extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('user_model', 'user');
+        $this->load->model('cat_model', 'cat');
+        // $this->system = true;
         $this->CONFIG = array(
             'baseurl' => 'http://localhost:8080/callback',//base_url('line/callback'),
             'client_id' => '1587152742',
@@ -15,6 +18,8 @@ class Line extends CI_Controller
         // $this->load->model('member','user');
 
     }
+
+
 
     public function getlinklogin()
     {  
@@ -154,7 +159,7 @@ class Line extends CI_Controller
         curl_setopt_array($curl, $options);
         $response = curl_exec($curl);
         curl_close($curl);
-        echo($response);
+        // echo($response);
         return $response;
     }
 
@@ -162,77 +167,123 @@ class Line extends CI_Controller
     {
         require_once('botline.php');
         $botline = new Botline('1587219476', 'eb6a5c29000b0a633432621fabab7b13');
-
         $obj = json_decode($botline->getTokenForChanal());
         $strAccessToken = $obj->access_token;
         $data = json_decode(file_get_contents('php://input'));
-        if ($data->events[0]->message->text == 'Yes') {
-            $header = array(
-                'Content-Type: application/json',
-                'Authorization: Bearer ' . $strAccessToken,
-            );
-            $parameter = array(
-                'to' => 'Ua5e6fb20533ea44c6318e54fc43b3808',
-                'messages' => array(
-                    array(
-                        'type' => 'text',
-                        'text' => 'การจับคู่แมวของคุณเสร็จสิ้น !!',
-                    ),
-                )
-            );
-            $this->curljson('https://api.line.me/v2/bot/message/push', json_encode($parameter), 'POST', $header);
-        }
-    }
-
-    public function sendlineofmatch($member_id,$cat_id){
-        require_once('botline.php');
-        $botline = new Botline('1587219476', 'eb6a5c29000b0a633432621fabab7b13');
-        $obj = json_decode($botline->getTokenForChanal());
-        $strAccessToken = $obj->access_token;
-        $parameter = array(
-            'to' => 'Ua5e6fb20533ea44c6318e54fc43b3808',
-            'messages' => array(
-                array(
-                    'type' => 'template',
-                    'altText' => 'this is a buttons template',
-                    'template' => array(
-                        'type' => 'buttons',
-                        'thumbnailImageUrl' => 'https://www.catster.com/wp-content/uploads/2018/07/Savannah-cat-long-body-shot.jpg',
-                        'title' => 'Title',
-                        'text' => 'Text',
-                        'actions' => array(
-                            array(
-                                'type' => 'uri',
-                                'label' => 'ดูรายละเอียดของคุณ',
-                                'uri' => 'https://www.facebook.com',
-                            ),
-                            array(
-                                'type' => 'uri',
-                                'label' => 'ดูรายละเอียดของผู้จับคู่',
-                                'uri' => 'https://www.facebook.com',
-                            ),
-                            array(
-                                'type' => 'message',
-                                'label' => 'Yes',
-                                'text' => 'Yes',
-                            ),
-                            array(
-                                'type' => 'message',
-                                'label' => 'No',
-                                'text' => 'No',
-                            ),
-                        )
-                    ),
-                ),
-            )
-        );
-
         $header = array(
             'Content-Type: application/json',
             'Authorization: Bearer ' . $strAccessToken,
         );
+        if (isset($data->events[0]->postback->data)) {
+            parse_str($data->events[0]->postback->data, $postback);
+            $state = false;
+            if ($postback['action'] == 'confirm') {
+                $state = $this->cat->callbackbot($postback['action'], $postback['matching_id']);
+                $parameter = array(
+                    'to' => $data->events[0]->source->userId,
+                    'messages' => array(
+                        array(
+                            'type' => 'text',
+                            'text' => 'การจับคู่แมวของคุณเสร็จสิ้น !!',
+                        ),
+                    )
+                );
+            } elseif ($postback['action'] == 'cancel_confirm') {
+                $state = $this->cat->callbackbot($postback['action'], $postback['matching_id']);
+                $parameter = array(
+                    'to' => $data->events[0]->source->userId,
+                    'messages' => array(
+                        array(
+                            'type' => 'text',
+                            'text' => 'ยกเลิกการจับคู่แมวแล้ว !!',
+                        ),
+                    )
+                );
+            }
+            if($state) $this->curljson('https://api.line.me/v2/bot/message/push', json_encode($parameter), 'POST', $header);
+            else {
+                $parameter = array(
+                    'to' => $data->events[0]->source->userId,
+                    'messages' => array(
+                        array(
+                            'type' => 'text',
+                            'text' => 'ไม่สามารถทำรายการได้ !!',
+                        ),
+                    )
+                );
+                $this->curljson('https://api.line.me/v2/bot/message/push', json_encode($parameter), 'POST', $header);
+            }
+            die();
+        }
+    }
+
+    public function sendlineofmatch($cat_id, $catmacth_id)
+    {
+        require_once('botline.php');
+        $this->system = true;
+        $user = $this->getUser();
+        $result = $this->cat->sendlineofmatch($user['user']['member_id'], $cat_id, $catmacth_id);
+        $botline = new Botline('1587219476', 'eb6a5c29000b0a633432621fabab7b13');
+        $obj = json_decode($botline->getTokenForChanal());
+        $strAccessToken = $obj->access_token;
+        if ($result['status']) {
+            $parameter = array(
+                'to' => $result['member_userid'],
+                'messages' => array(
+                    array(
+                        'type' => 'template',
+                        'altText' => 'มีคนต้องการจับคู่กับแมวของคุณ',
+                        'template' => array(
+                            'type' => 'buttons',
+                            // 'thumbnailImageUrl' => 'https://www.catster.com/wp-content/uploads/2018/07/Savannah-cat-long-body-shot.jpg',
+                            'title' => 'มีคนต้องการจับคู่กับแมวของคุณ',
+                            'text' => 'มีคนต้องการจับคู่กับแมวของคุณ',
+                            'actions' => array(
+                                array(
+                                    'type' => 'uri',
+                                    'label' => 'ดูรายละเอียดของคุณ',
+                                    'uri' => 'https://af79b15d.ngrok.io/product/'.$catmacth_id,
+                                ),
+                                array(
+                                    'type' => 'uri',
+                                    'label' => 'ดูรายละเอียดของผู้จับคู่',
+                                    'uri' => 'https://af79b15d.ngrok.io/product/'.$cat_id,
+                                ),
+                                array(
+                                    "type" => "postback",
+                                    'label' => 'Yes',
+                                    'text' => 'Yes',
+                                    "data" => "action=confirm&matching_id=".$result['matching_id']
+                                ),
+                                array(
+                                    "type" => "postback",
+                                    'label' => 'No',
+                                    'text' => 'No',
+                                    "data" => "action=cancel_confirm&matching_id=" . $result['matching_id']
+                                ),
+                            )
+                        ),
+                    ),
+                )
+            );
+
+            $header = array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $strAccessToken,
+            );
+            $this->curljson('https://api.line.me/v2/bot/message/push', json_encode($parameter), 'POST', $header);
+            $output = array(
+                'status' => 200,
+                'ME' => $result['data']
+            );
+        } else {
+            $output = array(
+                'status' => 400,
+                'msg' => $result['msg']
+            );
+        }
         header('Access-Control-Allow-Origin: *');
-        $this->curljson('https://api.line.me/v2/bot/message/push', json_encode($parameter), 'POST', $header);
+        die(json_encode($output));
     }
 
 }

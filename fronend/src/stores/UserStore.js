@@ -21,7 +21,8 @@ const userstore = new Vuex.Store({
         delete:[],
         linebot:[],
         delete_img:[],
-        catmatch :[]
+        catmatch :[],
+        showreview:[]
 
     },
     mutations: {
@@ -76,102 +77,104 @@ const userstore = new Vuex.Store({
         },
         catmatch(state, data){
             state.catmatch = data
+        },
+        showreview(state, data){
+            state.showreview = data
         }
-
     },
     actions: {
         async loadShowcat(context) {
-            let data = await axios.get("http://localhost/Project/api/showcat.php").then((r) => {
+            let data = await axios.get(" http://localhost/Project/api/showcat.php").then((r) => {
                 return r.data
             })
             context.commit("setShowcat", data)
         },
         async getLoginLine(context) {
-            let data = await axios.get("http://localhost/Project/api/line/getlinklogin").then((r) => {
+            let data = await axios.get(" http://localhost/Project/api/line/getlinklogin").then((r) => {
                 return r.data
             })
             context.commit("getLoginLine", data)
         },
         async getTokenLine(context, options) {
-            let data = await axios.get("http://localhost/Project/api/line/callback?code=" + options.code + "&state=" + options.state).then((r) => {
+            let data = await axios.get(" http://localhost/Project/api/line/callback?code=" + options.code + "&state=" + options.state).then((r) => {
                 return r.data
             })
             context.commit("getTokenLine", data)
         },
         async getUser(context, options) {
-            let data = await axios.post("http://localhost/Project/api/line/getUser", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/line/getUser", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("getUser", data)
         },
         async getFromsearch(context, options) {
-            let data = await axios.post("http://localhost/Project/api/from/showfrom", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/from/showfrom", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("getFromsearch", data)
         },
         async getEditCat(context, options) {
-            let data = await axios.post("http://localhost/Project/api/cat/EditCat/"+options.cat_id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/EditCat/"+options.cat_id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("EditCat", data)
         },
         async getdelete(context, options) {
-            let data = await axios.post("http://localhost/Project/api/cat/delete/"+options.cat_id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/delete/"+options.cat_id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("delete", data)
         },
         async addCat(context, options) {
-            let data = await axios.post("http://localhost/Project/api/cat/addCat", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/addCat", options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("addCat", data)
         },
         async UpdateProfile(context, options) {
-            let data = await axios.post("http://localhost/Project/api/user/update/"+options.id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/user/update/"+options.id, options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("UpdateProfile", data)
         },
         async showUser(context) {
-            let data = await axios.get("http://localhost/Project/api/user/showuser", { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.get(" http://localhost/Project/api/user/showuser", { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("showUser", data)
         },
         async viewcat(context,options) {
-            let data = await axios.post("http://localhost/Project/api/cat/viewcat/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/viewcat/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("viewcat", data)
         },
         async mycat(context,options) {
-            let data = await axios.post("http://localhost/Project/api/cat/mycat",options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/mycat",options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("mycat", data)
         },
         async show_editcat(context,options) {
-            let data = await axios.post("http://localhost/Project/api/cat/show_editcat/"+options.cat_id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/show_editcat/"+options.cat_id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("show_editcat", data)
         },
         async delete_img(context,options) {
-            let data = await axios.post("http://localhost/Project/api/cat/delete_img/"+options.cat_id+"/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/delete_img/"+options.cat_id+"/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("delete_img", data)
         },
         async search(context,options) {
-            let data = await axios.post("http://localhost/Project/api/cat/search/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/cat/search/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("getsearch", data)
         },
         async linebot(context,options) {
-            let data = await axios.post("http://localhost/Project/api/Line/sendlineofmatch",options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+            let data = await axios.post(" http://localhost/Project/api/Line/sendlineofmatch/"+options.cat_id+"/"+options.catmatch_id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("getlinebot", data)
@@ -181,6 +184,12 @@ const userstore = new Vuex.Store({
                 return r.data
             })
             context.commit("catmatch", data)
+        },
+        async showreview(context,options) {
+            let data = await axios.post("http://localhost/Project/api/cat/showreview",options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("showreview", data)
         },
     }
 })

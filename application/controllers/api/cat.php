@@ -84,7 +84,6 @@ class Cat extends Line
     }
     public function showcat($page)
     {
-
         $output = array(
             'status' => 200,
             'page_now' => (int)$page,
@@ -134,7 +133,6 @@ class Cat extends Line
             } else {
                 $output = array(
                     'status' => 400,
-                    'msg' => $result['msg']
                 );
             }
             header('Access-Control-Allow-Origin: *');
@@ -234,4 +232,31 @@ class Cat extends Line
             die(json_encode($output));
         }
     }
+    public function showreview()
+    {
+
+        header('Access-Control-Allow-Origin: *');
+        $user = $this->getUser();
+        if ($user['status'] == 200) {
+            $result = $this->cat->showreview($user['user']['member_id']);
+            if ($result['status']) {
+                $output = array(
+                    'status' => 200,
+                    'querycat'=> $result['querycat'],
+                    'querycatmacth'=> $result['querycatmacth']
+                );
+            } else {
+                $output = array(
+                    'status' => 400,
+                );
+            }
+            header('Access-Control-Allow-Origin: *');
+            die(json_encode($output));
+        } else {
+            $output = array('status' => 400, 'msg' => 'Error access_token');
+            header('Access-Control-Allow-Origin: *');
+            die(json_encode($output));
+        }
+    }
+
 }

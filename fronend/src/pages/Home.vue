@@ -324,9 +324,9 @@
           </div>
 
           <br>
-          <h2 class="section-title">News in Review</h2>
+          <!-- <h2 class="section-title">News in Review</h2> -->
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-4">
               <div
                 class="card card-background"
@@ -342,15 +342,14 @@
                   </a>
                 </div>
               </div>
-              <!-- end card -->
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <!-- section -->
     <!-- end-main-raised -->
-    <div class="section section-blog">
+    <!-- <div class="section section-blog">
       <div class="container">
         <h2 class="section-title">HOT CAT</h2>
         <div class="row">
@@ -379,7 +378,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- section -->
     <!-- notice modal -->
     <div
@@ -637,6 +636,13 @@ export default {
     addCat: async function() {
       if (!localStorage.access_token) router.push("/");
       this.form.member_id = this.user.member_id;
+      console.log(this.form);
+      if(this.form.cat_provinces=='กรุณาเลิอกจังหวัด'||
+      this.form.cat_sex== 'กรุณาเลิอกเพศ' ||
+      this.form.cat_breed== 'กรุณาเลิอกสายพันธ์'
+      ){
+          alert('กรุณากรอกข้อมูลให้ครบถ้วน!!');
+      }
       let optionts = {
         access_token:localStorage.access_token,
         form: this.form
@@ -651,7 +657,7 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
-          cat_img: {},
+          cat_img: null,
           cat_habit: null,
           cat_description: null,
           member_id: null

@@ -121,16 +121,13 @@
                             </div>
                         </div>
                         <div class="row text-right">
-                            {{viewcat_s.member_id}}
-                            <button class="btn btn-rose btn-round"  @click="catmatch(viewcat_s.cat_id,viewcat_s.cat_sex)"  data-toggle="modal" data-target="#match">จับคู่</button>
-                            <!-- @click="linebots(viewcat_s.member_id)" -->
-                            <!-- <i class="material-icons">touch_app</i> -->
+                            <button class="btn btn-rose btn-round"   @click="catmatch(viewcat_s.cat_id,viewcat_s.cat_sex)"  data-toggle="modal" data-target="#match">จับคู่</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="features text-center">
+            <!-- <div class="features text-center">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info">
@@ -163,8 +160,8 @@
                     </div>
 
                 </div>
-            </div>
-
+            </div> -->
+<!-- 
             <div class="related-products">
                 <h3 class="title text-center">You may also be interested in:</h3>
 
@@ -199,9 +196,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="col-sm-6 col-md-3">
+                    <!-- <div class="col-sm-6 col-md-3">
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
@@ -231,9 +228,9 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="col-sm-6 col-md-3">
+                    <!-- <div class="col-sm-6 col-md-3">
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
@@ -261,9 +258,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="col-sm-6 col-md-3">
+                    <!-- <div class="col-sm-6 col-md-3">
                         <div class="card card-product">
                             <div class="card-image">
                                 <a href="#pablo">
@@ -293,10 +290,10 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                </div>
-            </div>
+               
+            
         </div>
         <div class="modal fade" id="match" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-notice">
@@ -314,10 +311,13 @@
                     </div>
                 </div>
                 <div class="col-md-7">
-                     <strong>1. Register</strong>
-                     <p>The first step is to create an account at <a href="http://www.creative-tim.com/">Creative Tim</a>. You can choose a social network or go for the classic version, whatever works best for you.</p>
+                     <h3>{{catmatchs.cat_name}}</h3>
+                     <p>รายละเอียด : {{catmatchs.cat_description}}</p>
+                     <p></p>
                 </div>
-                
+                <div  align="center">
+                    <button type="button" @click="linebots(viewcat_s.cat_id,catmatchs.cat_id)"  class="btn btn-info btn-round" data-dismiss="modal">submit</button>
+                </div>
             </div>
         </div>
       </div>
@@ -337,14 +337,26 @@ export default {
   data() {
     return {
       viewcat_s: [],
-      catmatchs:[]
+      catmatchs:[],
+
     };
   },
   methods: {
-    viewcat: async function() {
+      getUser: async function() {
       if (!localStorage.access_token) router.push("/");
       let optionts = {
-          id : this.$route.params.id,
+        access_token: localStorage.access_token
+      };
+      await UserStore.dispatch("getUser", optionts);
+      if (UserStore.state.user.status == 200) {
+        this.user = UserStore.state.user.user;
+      } else if (UserStore.state.user.status == 400) {
+        router.push("/logout");
+      }
+    },
+    viewcat: async function() {
+      let optionts = {
+        id : this.$route.params.id,
         access_token: localStorage.access_token
       };
       await UserStore.dispatch("viewcat", optionts);
@@ -355,27 +367,32 @@ export default {
         router.push("/");
       }
     },
-    linebots: async function(member_id) {
+    linebots: async function(cat_id,catmatch_id) {
       if (!localStorage.access_token) router.push("/");
       let optionts = {
-          member_id : member_id
+          access_token: localStorage.access_token,
+          cat_id : cat_id,
+          catmatch_id :catmatch_id
       };
       await UserStore.dispatch("linebot", optionts);
     },
      catmatch: async function(cat_id,cat_sex) {
-      if (!localStorage.access_token) router.push("/");
+      if (!localStorage.access_token) {
+          
+            alert('กรุณาเข้าสู้ระบบเพื่อจับคู่!!')
+            window.location="/product/"+cat_id
+            return;
+        }
       let optionts = {
            access_token: localStorage.access_token,
           cat_id : cat_id,
           cat_sex : cat_sex  
-      };    
-      console.log(optionts);
+      };
       await UserStore.dispatch("catmatch", optionts);
       if (UserStore.state.catmatch.status == 200) {
         this.catmatchs = UserStore.state.catmatch.catmatch;
-        
-      } else if (UserStore.state.catmatch.status == 400) {
-        
+      }else if (UserStore.state.viewcat.status == 400) {
+          
       }
     },
   }, 

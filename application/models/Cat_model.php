@@ -13,11 +13,11 @@ class Cat_model extends CI_Model
 		$this->db->from('cat');
 		$this->db->join('cat_breed', 'cat.cat_breed = cat_breed.catbreed_id');
 		$this->db->join('provinces', 'cat.cat_provinces = provinces.id');
-		$this->db->where('cat_id',$id);
+		$this->db->where('cat_id', $id);
 		$query = $this->db->get();
 		$this->db->select('*');
 		$this->db->from('cat_img');
-		$this->db->where('cat_id',$id);
+		$this->db->where('cat_id', $id);
 		$queryimg = $this->db->get();
 		if ($query->num_rows() > 0) {
 			$query->result()[0]->cat_imgs = $queryimg->result();
@@ -30,9 +30,8 @@ class Cat_model extends CI_Model
 	public function insert($member_id = 0)
 	{
 		$data_insert = json_decode(file_get_contents('php://input'));
-		
 		if (is_object($data_insert)) {
-			
+
 			$data = array(
 				'member_id' => $member_id,
 				'cat_name' => $data_insert->form->cat_name,
@@ -46,10 +45,10 @@ class Cat_model extends CI_Model
 			);
 			$this->db->insert('cat', $data);
 			$cat_id = $this->db->insert_id();
-			$data_cat=$data_insert->form->cat_img;
+			$data_cat = $data_insert->form->cat_img;
 
 			$insert_img = array();
-			
+
 			foreach ($data_cat as $key => $value) {
 				$tmp = array(
 					'name' => $value->name,
@@ -57,7 +56,7 @@ class Cat_model extends CI_Model
 					'base64' => $value->base64,
 					'cat_id' => $cat_id,
 				);
-				array_push($insert_img,$tmp);
+				array_push($insert_img, $tmp);
 			}
 			$this->db->insert_batch('cat_img', $insert_img);
 			return array('status' => true);
@@ -116,7 +115,6 @@ class Cat_model extends CI_Model
 		if ($query->num_rows() > 0) {
 			return ceil($query->result()[0]->countCat / 9);
 			//$query->result();
-
 		} else {
 			return 0;
 		}
@@ -125,7 +123,7 @@ class Cat_model extends CI_Model
 	{
 		// INNER JOIN cat on cat_img.cat_id =cat.cat_id GROUP BY cat_img.`cat_id`
 		$data = json_decode(file_get_contents('php://input'));
-		$this->db->select('*')->from('cat')->join('cat_img','cat_img.cat_id =cat.cat_id')->where('cat_display', 1);
+		$this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id =cat.cat_id')->where('cat_display', 1);
 		// ->join('cat_img', 'cat.cat_id = cat_img.cat_id')
 		if ($data->search->cat_provinces[0] != 'all') $this->db->where_in('cat_provinces', $data->search->cat_provinces);
 		if ($data->search->cat_sex[0] != 'all') $this->db->where_in('cat_sex', $data->search->cat_sex);
@@ -152,7 +150,7 @@ class Cat_model extends CI_Model
 	}
 	public function mycat($member_id)
 	{
-		$this->db->select('*')->from('cat')->join('cat_img','cat_img.cat_id =cat.cat_id')->where('member_id', $member_id)->GROUP_BY('cat_img.cat_id','cat_id');
+		$this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id =cat.cat_id')->where('member_id', $member_id)->GROUP_BY('cat_img.cat_id', 'cat_id');
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
 			return array('status' => true, 'data' => $query->result());
@@ -160,20 +158,24 @@ class Cat_model extends CI_Model
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
 	}
-	public function catmatch($member_id,$cat_id,$cat_sex)
-	{	
+	public function catmatch($member_id, $cat_id, $cat_sex)
+	{
 		$data = array(
-			'cat_sex' => (urldecode($cat_sex) == 'เพศผู้' ? 'เพศเมีย':'เพศผู้'),
-			'member_id' => $member_id
+			'cat_sex' => (urldecode($cat_sex) == 'เพศผู้' ? 'เพศเมีย' : 'เพศผู้'),
+			'member_id' => $member_id,
 		);
-		print_r($data);
-		die();
-		
-		$this->db->select('*')->from('cat')->join('cat_img','cat_img.cat_id =cat.cat_id')->where($data)->GROUP_BY('cat_img.cat_id','cat_id');
+		$data_cat = array(
+			'member_id' => $member_id,
+			'cat_id' => $cat_id,
+		);
+		$query =$this->db->select('*')->from('cat')->where($data_cat)->get();
+		if($query->num_rows() > 0){
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+		$this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id =cat.cat_id')->where($data)->GROUP_BY('cat_img.cat_id', 'cat_id');
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
 			return array('status' => true, 'data' => $query->result());
-
 		} else {
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
@@ -183,7 +185,7 @@ class Cat_model extends CI_Model
 		$query = $this->db->select('*')->from('cat')->where('cat_id', $cat_id)->get();
 		$this->db->select('*');
 		$this->db->from('cat_img');
-		$this->db->where('cat_id',$cat_id);
+		$this->db->where('cat_id', $cat_id);
 		$queryimg = $this->db->get();
 		if ($query->num_rows() > 0) {
 			$query->result()[0]->cat_imgs = $queryimg->result();
@@ -193,7 +195,56 @@ class Cat_model extends CI_Model
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
 	}
+	public function sendlineofmatch($member_id, $cat_id, $catmatch_id)
+	{	
+		// SELECT * FROM `cat` INNER JOIN member ON cat.member_id = member.member_id
+		$query = $this->db->select('*')->from('cat')->where('cat.cat_id', $catmatch_id)->get();
+		$catmatch = $query->result()[0];
 
+		$query = $this->db->select('*')->from('cat')->join('member', 'cat.member_id =member.member_id')->where('cat_id', $cat_id)->get();
+		$cat = $query->result()[0];
+		// SELECT COUNT(*) as count_check FROM `matching` WHERE `member_id`= 27 AND`membermatch_id`=28 AND`matching_status` IN(0,1,2)
+		$data = array(
+			'member_id' => $member_id,
+			'membermatch_id' => $cat->member_id
+		);
+		$status = array(0, 1, 2);
+		$query = $this->db->select('COUNT(*) as count_check')->from('matching')->where($data)->where_in('matching_status', $status)->get();
+		$check = $query->result()[0];
+		if ($check->count_check != 0) {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+		$data = array(
+			'member_id' => $member_id,
+			'membermatch_id' => $cat->member_id,
+			'cat_id' => $cat->cat_id,
+			'catmatch_id' => $catmatch->cat_id,
+			'matching_status' => 0
+		);
+		$this->db->insert('matching', $data);
+		if ($query->num_rows() > 0) {
+			return array('status' => true, 'matching_id' => $this->db->insert_id(), 'data' => $query->result(), 'member_userid' => $cat->member_userid);
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+	}
+	public function callbackbot($type = 'cancel_confirm', $matching_id = 0)
+	{
+		$where = array(
+			'matching_id' => $matching_id,
+			'matching_status' => 0
+		);
+		$query = $this->db->select('COUNT(*) as count_check')->from('matching')->where($where)->get();
+		$check = $query->result()[0];
+		if ($check->count_check > 0) {
+			$data_update = array(
+				'matching_status' => ($type == 'confirm' ? 1 : 2)
+			);
+			$this->db->where($where)->update('matching', $data_update);
+			return true;
+		}
+		return false;
+	}
 	public function delete($cat_id = 0)
 	{
 		$data_update = json_decode(file_get_contents('php://input'));
@@ -207,24 +258,24 @@ class Cat_model extends CI_Model
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
 	}
-	public function delete_img($cat_id,$id = 0)
+	public function delete_img($cat_id, $id = 0)
 	{
-			
+
 		$query = $this->db->where('cat_id', $cat_id)->get('cat_img');
 		if ($query->num_rows() > 1) {
 			$query = $this->db->where('id', $id)->delete('cat_img');
-			return array('status' => true );
-		}else{
-			return array('status' => false );
+			return array('status' => true);
+		} else {
+			return array('status' => false);
 		}
 
-		
-	
+
+
 	}
 	public function EditCat($cat_id = 0)
 	{
 		$data_update = json_decode(file_get_contents('php://input'));
-		
+
 		if (is_object($data_update)) {
 			$data = array(
 				'cat_id' => $cat_id,
@@ -236,10 +287,10 @@ class Cat_model extends CI_Model
 				'cat_description' => $data_update->edit->cat_description,
 			);
 			$this->db->where('cat_id', $cat_id)->update('cat', $data);
-			$data_cat=$data_update->edit->new_imgs;
+			$data_cat = $data_update->edit->new_imgs;
 
 			$insert_img = array();
-			
+
 			foreach ($data_cat as $key => $value) {
 				$tmp = array(
 					'name' => $value->name,
@@ -247,11 +298,30 @@ class Cat_model extends CI_Model
 					'base64' => $value->base64,
 					'cat_id' => $cat_id,
 				);
-				array_push($insert_img,$tmp);
+				array_push($insert_img, $tmp);
 			}
-			
+
 			$this->db->insert_batch('cat_img', $insert_img);
 			return array('status' => true);
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+	}
+	
+	public function showreview($member_id)
+	{	
+		$data =array(
+		'member_id'=>$member_id,
+		'matching_status'=> 2
+		);
+		$query = $this->db->select('*')->from('matching')->where($data)->get();
+		$check = $query->result()[0];
+		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->cat_id)->GROUP_BY('cat_img.cat_id', 'cat_id')->get();
+		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->catmatch_id)->GROUP_BY('cat_img.cat_id', 'cat_id')->get();
+		if ($query->num_rows() > 0) {
+			return array('status' => true,
+			'querycat' =>$querycat->result()[0],
+			'querycatmacth' =>$querycatmacth->result()[0]);
 		} else {
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
