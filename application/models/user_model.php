@@ -23,6 +23,9 @@ class User_model extends CI_Model {
                 'member_displayname' => $data_update->form->member_displayname,
                 'member_phone' =>$data_update->form->member_phone,
                 'member_status' =>$data_update->form->member_status,
+                'facebook' =>$data_update->form->facebook,
+                'urlfacebook' =>$data_update->form->urlfacebook,
+                'line' =>$data_update->form->line,
             );
             
             $this->db->where('member_userid',$member_id)->update('member', $data);

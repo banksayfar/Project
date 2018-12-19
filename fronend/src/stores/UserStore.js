@@ -18,7 +18,10 @@ const userstore = new Vuex.Store({
         EditCat:[],
         show_editcat:[],
         search:[],
-        delete:[]
+        delete:[],
+        linebot:[],
+        delete_img:[],
+        catmatch :[]
 
     },
     mutations: {
@@ -64,6 +67,15 @@ const userstore = new Vuex.Store({
         },
         getdelete(state, data){
             state.delete = data
+        },
+        getlinebot(state, data){
+            state.linebot = data
+        },
+        delete_img(state, data){
+            state.delete_img = data
+        },
+        catmatch(state, data){
+            state.catmatch = data
         }
 
     },
@@ -146,11 +158,29 @@ const userstore = new Vuex.Store({
             })
             context.commit("show_editcat", data)
         },
+        async delete_img(context,options) {
+            let data = await axios.post("http://localhost/Project/api/cat/delete_img/"+options.cat_id+"/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("delete_img", data)
+        },
         async search(context,options) {
             let data = await axios.post("http://localhost/Project/api/cat/search/"+options.id,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
                 return r.data
             })
             context.commit("getsearch", data)
+        },
+        async linebot(context,options) {
+            let data = await axios.post("http://localhost/Project/api/Line/sendlineofmatch",options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("getlinebot", data)
+        },
+        async catmatch(context,options) {
+            let data = await axios.post("http://localhost/Project/api/cat/catmatch/"+options.cat_id+"/"+options.cat_sex,options, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then((r) => {
+                return r.data
+            })
+            context.commit("catmatch", data)
         },
     }
 })

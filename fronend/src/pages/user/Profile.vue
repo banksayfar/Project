@@ -24,15 +24,7 @@
 
                     <h3 class="title">{{user.member_displayname}}</h3>
                     <h6>#{{user.member_id}}</h6>
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-dribbble">
-                      <i class="fa fa-dribbble"></i>
-                    </a>
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-twitter">
-                      <i class="fa fa-twitter"></i>
-                    </a>
-                    <a href="#pablo" class="btn btn-just-icon btn-simple btn-pinterest">
-                      <i class="fa fa-pinterest"></i>
-                    </a>
+                    
                   </div>
                 </div>
                 <div class="col-xs-2 follow">
@@ -148,27 +140,24 @@
                       <h4 class="title">Stats</h4>
                       <ul class="list-unstyled">
                         <li>
-                          <b>60</b> Products
+                          <b>60</b> &nbsp;&nbsp; Review
                         </li>
                         <li>
-                          <b>4</b> Collections
+                          <b>10</b> &nbsp;&nbsp; Cat's
                         </li>
-                        <li>
-                          <b>331</b> Influencers
-                        </li>
-                        <li>
-                          <b>1.2K</b> Likes
-                        </li>
+                        
                       </ul>
                       <hr>
-                      <h4 class="title">About his Work</h4>
+                      <h4 class="title">About his status</h4>
                       <p
                         class="description"
-                      >French luxury footwear and fashion. The footwear has incorporated shiny, red-lacquered soles that have become his signature.</p>
+                      >{{user.member_status}}</p>
                       <hr>
-                      <h4 class="title">Focus</h4>
-                      <span class="label label-primary">Footwear</span>
-                      <span class="label label-rose">Luxury</span>
+                      <h4 class="title">Contact</h4>
+                      <p>Tel : &nbsp;{{user.member_phone}}</p>
+                      <p>FB : &nbsp;<a :href="user.urlfacebook" target="_blank">{{user.facebook}}</a></p>
+                      
+                      <p>Line :  &nbsp;{{user.line}}</p>
                     </div>
                   </div>
                 </div>
@@ -185,7 +174,7 @@
                         <div class="col-md-5">
                           <div class="card-image">
                             <a href="#pablo">
-                              <img class="img" src="assets/img/cat/1.jpg">
+                              <img class="img" :src="mycat.base64">
                             </a>
                           </div>
                         </div>
@@ -289,6 +278,40 @@
                       class="form-control"
                       v-model="user.member_phone"
                       value="user.member_phone"
+                      required
+                    >
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="user.facebook"
+                      value="user.facebook"
+                      required
+                    >
+                     <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <input
+                      type="url"
+                      class="form-control"
+                      v-model="user.urlfacebook"
+                      value="user.urlfacebook"
+                      required
+                    >
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="user.line"
+                      value="user.line"
                       required
                     >
                   </div>
@@ -421,7 +444,6 @@
                         v-for="catbreeds in catbreed"
                         :key="catbreeds.id"
                         :value="catbreeds.catbreed_id"
-                        @click="form.cat_breed"
                       >{{catbreeds.breed_name}}</option>
                     </select>
                   </div>
@@ -432,7 +454,8 @@
                     </span>
 
                     <div class="form-group form-file-upload">
-                      <input type="file" id="inputFile1" multiple>
+                      <input type="file" @change="onFileChanged" multiple>
+
                       <div class="input-group">
                         <input
                           type="text"
@@ -474,6 +497,7 @@
         </div>
       </div>
     </div>
+    <!-- end notice modal -->
      <!-- notice modal -->
 <div class="modal fade" id="Editcat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-notice">
@@ -513,7 +537,6 @@
                         <span class="input-group-addon">
                              <i class="material-icons">face</i>
                         </span>
-
                                     <select class="form-control  " v-model="edit.cat_provinces" data-style="select-with-transition" title="กรุณาเลิอกจังหวัด" data-size="7" tabindex="-98">
                                         <option selected disabled>กรุณาเลิอกจังหวัด</option>
                                         <option v-for="province in provinces" :key="province.id" :value="province.id" >{{province.name_th}}</option>
@@ -545,18 +568,37 @@
                         </span>
                             
                       <div class="form-group form-file-upload">
-                                <input type="file" id="inputFile1" multiple="">
-                                <div class="input-group">
-                                    <input type="text" readonly="" class="form-control" v-model="edit.cat_img" placeholder="Simple chooser..." multiple="">
-                                </div>
-                            </div>
+                      <input type="file" @change="onFileChangedEdit" multiple>
+
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          readonly
+                          class="form-control"
+                          placeholder="Simple chooser..."
+                          multiple
+                        >
+                      </div>
+                    </div>
+
+
+                      <!-- <div class="form-group form-file-upload"> 
+                        <input type="file" @change="onFileChangedEdit" readonly="" class="form-control" placeholder="Simple chooser..."  multiple>
+                               
+                            </div> -->
                      </div>
                    </div>
-                   
-                   
-                     
-        
-         
+                   <div class="input-group">
+                        <span class="input-group-addon">
+                             <i class="material-icons">face</i>
+                        </span>
+                        <div class="">
+                            <div class="col-md-6" v-for="viewcat in edit.cat_imgs" :key="viewcat.id">
+                                    <img :src="viewcat.base64" style="width: 150px !important; height: 150px !important;"/>
+                             <a  @click="delete_img(viewcat.id,viewcat.cat_id)"><i class="material-icons" >clear</i></a>
+                            </div>
+                         </div>
+                   </div>
                <div class="col-md-12">
               <div class="input-group">
                         <span class="input-group-addon">
@@ -620,6 +662,86 @@ export default {
     };
   },
   methods: {
+    onFileChanged(e){
+        // get the files
+        let files = e.target.files;
+        // Process each file
+        this.form.cat_img = []
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          // Make new FileReader
+          let reader = new FileReader()
+          // Convert the file to base64 text
+          reader.readAsDataURL(file)
+          // on reader load somthing...
+          reader.onload = () => {
+            // Make a fileInfo Object
+            let fileInfo = {
+              name: file.name,
+              type: file.type,
+              size: Math.round(file.size / 1000)+' kB',
+              base64: reader.result,
+              file: file
+            }
+
+            // Push it to the state
+// onFileChangedEdit
+                  this.form.cat_img.push(fileInfo)
+           
+            
+            
+            console.log(this.form.cat_img)
+            // If all files have been proceed
+            // if(this.form.cat_img.length == files.length){
+            //   // Apply Callback function
+            //   if(this.multiple) this.done(this.form.cat_img)
+            //   else this.done(this.form.cat_img[0])
+            // }
+           
+          } // reader.onload
+        } // for
+
+      }, // onChange()
+       onFileChangedEdit(e){
+        // get the files
+        let files = e.target.files;
+        // Process each file
+        this.edit.new_imgs = []
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          // Make new FileReader
+          let reader = new FileReader()
+          // Convert the file to base64 text
+          reader.readAsDataURL(file)
+          // on reader load somthing...
+          reader.onload = () => {
+            // Make a fileInfo Object
+            let fileInfo = {
+              name: file.name,
+              type: file.type,
+              size: Math.round(file.size / 1000)+' kB',
+              base64: reader.result,
+              file: file
+            }
+
+            // Push it to the state
+// 
+                  this.edit.new_imgs.push(fileInfo)
+           
+            
+            
+            console.log("this.edit.cat_img",this.edit.cat_img)
+            // If all files have been proceed
+            // if(this.form.cat_img.length == files.length){
+            //   // Apply Callback function
+            //   if(this.multiple) this.done(this.form.cat_img)
+            //   else this.done(this.form.cat_img[0])
+            // }
+           
+          } // reader.onload
+        } // for
+
+      }, // onChange()
     getUser: async function() {
       if (!localStorage.access_token) router.push("/");
       let optionts = {
@@ -658,7 +780,7 @@ export default {
       };
       console.log(optionts);
       await UserStore.dispatch("getEditCat", optionts);
-      this.mycat();
+  
       if (UserStore.state.update.status == 200) {
         this.mycat();
       } else if (UserStore.state.EditCat.status == 400) {
@@ -674,7 +796,6 @@ export default {
         access_token: localStorage.access_token,
         cat_id:cat_id,
       };
-      console.log(optionts);
       await UserStore.dispatch("getdelete", optionts);
       this.mycat();
       if (UserStore.state.update.status == 200) {
@@ -713,7 +834,7 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
-          cat_img: null,
+          cat_img: {},
           cat_habit: null,
           cat_description: null,
           member_id: null
@@ -729,12 +850,27 @@ export default {
       };
       await UserStore.dispatch("getFromsearch", optionts);
       console.log(UserStore.state.fromsearch);
-      if (UserStore.state.fromsearch.status == 200) {
+      
         this.provinces = UserStore.state.fromsearch.provinces;
         this.catbreed = UserStore.state.fromsearch.catbreed;
         this.showcat = UserStore.state.fromsearch.showcat;
-      } else if (UserStore.state.fromsearch.status == 400) {
-        router.push("/logout");
+     
+    },
+    delete_img: async function(id,cat_id) {
+      if(!confirm('Are you sure you want to delete this item?')){
+          return
+      }
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+        access_token: localStorage.access_token,
+        id:id,
+        cat_id:cat_id
+      };
+      await UserStore.dispatch("delete_img", optionts);
+      if (UserStore.state.delete_img.status == 200) {
+        this.show_editcat(cat_id);
+      } else if (UserStore.state.delete_img.status == 400) {
+          alert('ไม่สามารถลบรูปแมวได้');
       }
     },
     show_editcat: async function(cat_id) {
@@ -753,10 +889,41 @@ export default {
       }
     },
   },
+
   async mounted() {
+    window.scrollTo(0, 0);
     await this.getUser();
     await this.mycat();
     await this.getFromsearch();
-  }
+$(document).ready(function () {
+        //บนสุด
+        window.scrollTo(0, 0);
+       setTimeout(function () {
+            $("#flexiselDemo1").flexisel({
+                visibleItems: 3,
+                itemsToScroll: 1,
+                animationSpeed: 400,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 3
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 3
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3
+                    }
+                }
+            });
+        },3000);
+        
+    });
+  },
+
 };
+ 
 </script>

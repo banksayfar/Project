@@ -324,7 +324,7 @@
           </div>
 
           <br>
-          <h2 class="section-title">News in fashion</h2>
+          <h2 class="section-title">News in Review</h2>
 
           <div class="row">
             <div class="col-md-4">
@@ -337,92 +337,12 @@
                   <a href="#pablo">
                     <h3 class="card-title">The best trends in fashion 2017</h3>
                   </a>
-                  <p
-                    class="card-description"
-                  >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
                   <a href="#pablo" class="btn btn-white btn-round">
                     <i class="material-icons">subject</i> Read
                   </a>
                 </div>
               </div>
               <!-- end card -->
-            </div>
-
-            <div class="col-md-4">
-              <div
-                class="card card-background"
-                style="background-image: url(assets/img/examples/color3.jpg)"
-              >
-                <div class="card-content">
-                  <h6 class="category text-info">Fashion News</h6>
-                  <h3 class="card-title">Kanye joins the Yeezy team at Adidas</h3>
-                  <p
-                    class="card-description"
-                  >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-                  <a href="#pablo" class="btn btn-white btn-round">
-                    <i class="material-icons">subject</i> Read
-                  </a>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-
-            <div class="col-md-4">
-              <div
-                class="card card-background"
-                style="background-image: url(assets/img/examples/chris1.jpg)"
-              >
-                <div class="card-content">
-                  <h6 class="category text-info">Productivy Apps</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">Learn how to use the new colors of 2017</h3>
-                  </a>
-                  <p
-                    class="card-description"
-                  >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-                  <a href="#pablo" class="btn btn-white btn-round">
-                    <i class="material-icons">subject</i> Read
-                  </a>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-
-            <div class="col-md-6">
-              <div class="card card-background" style="background-image: url(assets/img/dg3.jpg)">
-                <div class="card-content">
-                  <h6 class="category text-info">Tutorials</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">Trending colors of 2017</h3>
-                  </a>
-                  <p
-                    class="card-description"
-                  >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-                  <a href="#pablo" class="btn btn-white btn-round">
-                    <i class="material-icons">subject</i> Read
-                  </a>
-                </div>
-              </div>
-              <!-- end card -->
-            </div>
-
-            <div class="col-md-6">
-              <div class="card card-background" style="background-image: url(assets/img/dg1.jpg)">
-                <div class="card-content">
-                  <h6 class="category text-info">Productivy Style</h6>
-                  <a href="#pablo">
-                    <h3 class="card-title">Fashion & Style 2017</h3>
-                  </a>
-                  <p
-                    class="card-description"
-                  >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-                  <a href="#pablo" class="btn btn-white btn-round">
-                    <i class="material-icons">subject</i> read
-                  </a>
-                </div>
-              </div>
-              <!-- end card -->
-           
             </div>
           </div>
         </div>
@@ -432,7 +352,7 @@
     <!-- end-main-raised -->
     <div class="section section-blog">
       <div class="container">
-        <h2 class="section-title">Latest Articles</h2>
+        <h2 class="section-title">HOT CAT</h2>
         <div class="row">
           <div class="col-md-4">
             <div class="card card-blog">
@@ -450,54 +370,6 @@
                 <h6 class="category text-rose">Trends</h6>
                 <h4 class="card-title">
                   <a href="#pablo">Learn how to wear your scarf with a floral print shirt</a>
-                </h4>
-                <p
-                  class="card-description"
-                >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card card-blog">
-              <div class="card-image">
-                <a href="#pablo">
-                  <img src="assets/img/dg10.jpg" alt>
-                </a>
-                <div
-                  class="colored-shadow"
-                  style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"
-                ></div>
-                <div class="ripple-container"></div>
-              </div>
-              <div class="card-content">
-                <h6 class="category text-rose">Fashion week</h6>
-                <h4 class="card-title">
-                  <a href="#pablo">Katy Perry was wearing a Dolce & Gabanna arc dress</a>
-                </h4>
-                <p
-                  class="card-description"
-                >Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card card-blog">
-              <div class="card-image">
-                <a href="#pablo">
-                  <img src="assets/img/dg9.jpg" alt>
-                </a>
-                <div
-                  class="colored-shadow"
-                  style="background-image: url(&quot;assets/img/examples/color1.jpg&quot;); opacity: 1;"
-                ></div>
-                <div class="ripple-container"></div>
-              </div>
-              <div class="card-content">
-                <h6 class="category text-rose">Fashion week</h6>
-                <h4 class="card-title">
-                  <a href="#pablo">Check the latest fashion events and which are the trends</a>
                 </h4>
                 <p
                   class="card-description"

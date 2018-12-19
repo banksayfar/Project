@@ -152,11 +152,25 @@ class Cat_model extends CI_Model
 	}
 	public function mycat($member_id)
 	{
+		$this->db->select('*')->from('cat')->join('cat_img','cat_img.cat_id =cat.cat_id')->where('member_id', $member_id)->GROUP_BY('cat_img.cat_id','cat_id');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return array('status' => true, 'data' => $query->result());
+		} else {
+			return array('status' => false, 'msg' => 'Error Incorrect information.');
+		}
+	}
+	public function catmatch($member_id,$cat_id,$cat_sex)
+	{	
 		$data = array(
-			'member_id' => $member_id,
-			'cat_display' => 1
+			'cat_sex' => (urldecode($cat_sex) == 'เพศผู้' ? 'เพศเมีย':'เพศผู้'),
+			'member_id' => $member_id
 		);
-			$query = $this->db->select('*')->from('cat')->where($data)->get();
+		print_r($data);
+		die();
+		
+		$this->db->select('*')->from('cat')->join('cat_img','cat_img.cat_id =cat.cat_id')->where($data)->GROUP_BY('cat_img.cat_id','cat_id');
+		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
 			return array('status' => true, 'data' => $query->result());
 
@@ -167,8 +181,13 @@ class Cat_model extends CI_Model
 	public function show_editcat($cat_id)
 	{
 		$query = $this->db->select('*')->from('cat')->where('cat_id', $cat_id)->get();
+		$this->db->select('*');
+		$this->db->from('cat_img');
+		$this->db->where('cat_id',$cat_id);
+		$queryimg = $this->db->get();
 		if ($query->num_rows() > 0) {
-			return array('status' => true, 'data' => $query->result());
+			$query->result()[0]->cat_imgs = $queryimg->result();
+			return array('status' => true, 'data' => $query->result()[0]);
 
 		} else {
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
@@ -188,23 +207,50 @@ class Cat_model extends CI_Model
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
 	}
+	public function delete_img($cat_id,$id = 0)
+	{
+			
+		$query = $this->db->where('cat_id', $cat_id)->get('cat_img');
+		if ($query->num_rows() > 1) {
+			$query = $this->db->where('id', $id)->delete('cat_img');
+			return array('status' => true );
+		}else{
+			return array('status' => false );
+		}
+
+		
+	
+	}
 	public function EditCat($cat_id = 0)
 	{
 		$data_update = json_decode(file_get_contents('php://input'));
-		print_r($data_update);
+		
 		if (is_object($data_update)) {
 			$data = array(
-
+				'cat_id' => $cat_id,
 				'cat_name' => $data_update->edit->cat_name,
 				'cat_sex' => $data_update->edit->cat_sex,
 				'cat_provinces' => $data_update->edit->cat_provinces,
 				'cat_birthdate' => $data_update->edit->cat_birthdate,
 				'cat_breed' => $data_update->edit->cat_breed,
-				'cat_img' => $data_update->edit->cat_img,
 				'cat_description' => $data_update->edit->cat_description,
 			);
-
 			$this->db->where('cat_id', $cat_id)->update('cat', $data);
+			$data_cat=$data_update->edit->new_imgs;
+
+			$insert_img = array();
+			
+			foreach ($data_cat as $key => $value) {
+				$tmp = array(
+					'name' => $value->name,
+					'type' => $value->type,
+					'base64' => $value->base64,
+					'cat_id' => $cat_id,
+				);
+				array_push($insert_img,$tmp);
+			}
+			
+			$this->db->insert_batch('cat_img', $insert_img);
 			return array('status' => true);
 		} else {
 			return array('status' => false, 'msg' => 'Error Incorrect information.');

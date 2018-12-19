@@ -120,6 +120,31 @@ class Cat extends Line
             die(json_encode($output));
         }
     }
+    public function catmatch($cat_id,$cat_sex)
+    {
+       
+        $user = $this->getUser();
+        if ($user['status'] == 200) {
+            $result = $this->cat->catmatch($user['user']['member_id'],$cat_id,$cat_sex);
+            if ($result['status']) {
+                $output = array(
+                    'status' => 200,
+                    'catmatch' => $result['data']
+                );
+            } else {
+                $output = array(
+                    'status' => 400,
+                    'msg' => $result['msg']
+                );
+            }
+            header('Access-Control-Allow-Origin: *');
+            die(json_encode($output));
+        } else {
+            $output = array('status' => 400, 'msg' => 'Error access_token');
+            header('Access-Control-Allow-Origin: *');
+            die(json_encode($output));
+        }
+    }
     public function show_editcat($cat_id)
     {
         $user = $this->getUser();
@@ -128,7 +153,7 @@ class Cat extends Line
             if ($result['status']) {
                 $output = array(
                     'status' => 200,
-                    'data' => $result['data'][0]
+                    'data' => $result['data']
                 );
             } else {
                 $output = array(
@@ -174,6 +199,31 @@ class Cat extends Line
                 $output = array(
                     'status' => 400,
                     'msg' => $result['msg']
+                );
+            }
+            header('Access-Control-Allow-Origin: *');
+            die(json_encode($output));
+        } else {
+            $output = array('status' => 400, 'msg' => 'Error access_token');
+            header('Access-Control-Allow-Origin: *');
+            die(json_encode($output));
+        }
+    }
+    public function delete_img($cat_id,$id)
+    {
+
+        header('Access-Control-Allow-Origin: *');
+        $user = $this->getUser();
+        if ($user['status'] == 200) {
+            $result = $this->cat->delete_img($cat_id,$id);
+            if ($result['status']) {
+                $output = array(
+                    'status' => 200,
+                    'msg' => 'delete_img success'
+                );
+            } else {
+                $output = array(
+                    'status' => 400,
                 );
             }
             header('Access-Control-Allow-Origin: *');

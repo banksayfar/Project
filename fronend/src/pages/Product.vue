@@ -115,13 +115,16 @@
                             </div>
                             <div class="col-md-3 col-sm-3">
                                  <br>
-                                 <label>เพส</label>
+                                 <label>เพศ</label>
                                <p type="text" class="form-control">{{viewcat_s.cat_sex}}</p>
                             </div>
                             </div>
                         </div>
                         <div class="row text-right">
-                            <button class="btn btn-rose btn-round">จับคู่&nbsp;<i class="material-icons">touch_app</i></button>
+                            {{viewcat_s.member_id}}
+                            <button class="btn btn-rose btn-round"  @click="catmatch(viewcat_s.cat_id,viewcat_s.cat_sex)"  data-toggle="modal" data-target="#match">จับคู่</button>
+                            <!-- @click="linebots(viewcat_s.member_id)" -->
+                            <!-- <i class="material-icons">touch_app</i> -->
                         </div>
                     </div>
                 </div>
@@ -295,6 +298,32 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="match" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-notice">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+        <h5 class="modal-title" id="myModalLabel">แมวที่สามารถจับคู่ได้!!</h5>
+      </div>
+      <div class="modal-body">
+        <div class="instruction">
+            <div class="row" v-for="catmatchs in catmatchs" :key="catmatchs.id">
+                <div class="col-md-4">
+                    <div class="picture">
+                        <img :src="catmatchs.base64" alt="Thumbnail Image"  class="img-rounded img-responsive">
+                    </div>
+                </div>
+                <div class="col-md-7">
+                     <strong>1. Register</strong>
+                     <p>The first step is to create an account at <a href="http://www.creative-tim.com/">Creative Tim</a>. You can choose a social network or go for the classic version, whatever works best for you.</p>
+                </div>
+                
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
 
     
@@ -307,12 +336,12 @@ export default {
   components: {},
   data() {
     return {
-      viewcat_s: []
+      viewcat_s: [],
+      catmatchs:[]
     };
   },
   methods: {
     viewcat: async function() {
-      
       if (!localStorage.access_token) router.push("/");
       let optionts = {
           id : this.$route.params.id,
@@ -325,15 +354,38 @@ export default {
       } else if (UserStore.state.viewcat.status == 400) {
         router.push("/");
       }
-    }
-  },
+    },
+    linebots: async function(member_id) {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+          member_id : member_id
+      };
+      await UserStore.dispatch("linebot", optionts);
+    },
+     catmatch: async function(cat_id,cat_sex) {
+      if (!localStorage.access_token) router.push("/");
+      let optionts = {
+           access_token: localStorage.access_token,
+          cat_id : cat_id,
+          cat_sex : cat_sex  
+      };    
+      console.log(optionts);
+      await UserStore.dispatch("catmatch", optionts);
+      if (UserStore.state.catmatch.status == 200) {
+        this.catmatchs = UserStore.state.catmatch.catmatch;
+        
+      } else if (UserStore.state.catmatch.status == 400) {
+        
+      }
+    },
+  }, 
    async mounted() {
     await this.viewcat();
     $(document).ready(function () {
         //บนสุด
         window.scrollTo(0, 0);
         // setTimeout(function () {
-            ("#flexiselDemo1").flexisel({
+            $("#flexiselDemo1").flexisel({
                 visibleItems: 3,
                 itemsToScroll: 1,
                 animationSpeed: 400,
