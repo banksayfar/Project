@@ -209,10 +209,9 @@ class Cat_model extends CI_Model
 
 		$query = $this->db->select('*')->from('cat')->join('member', 'cat.member_id =member.member_id')->where('cat_id', $cat_id)->get();
 		$cat = $query->result()[0];
-		// SELECT COUNT(*) as count_check FROM `matching` WHERE `member_id`= 27 AND`membermatch_id`=28 AND`matching_status` IN(0,1,2)
 		$data = array(
-			'member_id' => $member_id,
-			'membermatch_id' => $cat->member_id
+			'cat_id' => $cat_id,
+			'catmatch_id' => $cat->cat_id
 		);
 		$status = array(0, 1, 2);
 		$query = $this->db->select('COUNT(*) as count_check')->from('matching')->where($data)->where_in('matching_status', $status)->get();
@@ -329,8 +328,8 @@ class Cat_model extends CI_Model
 		);
 		$query = $this->db->select('*')->from('matching')->where($data)->or_where($datas)->get();
 		$check = $query->result()[0];
-		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->cat_id)->GROUP_BY('cat_img.cat_id', 'cat_id')->get();
-		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->catmatch_id)->GROUP_BY('cat_img.cat_id', 'cat_id')->get();
+		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->cat_id)->get();
+		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->catmatch_id)->get();
 		if ($query->num_rows() > 0) {
 			return array('status' => true,
 			'querycat' =>$querycat->result()[0],

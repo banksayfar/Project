@@ -359,6 +359,12 @@ export default {
           catmatch_id :catmatch_id
       };
       await UserStore.dispatch("linebot", optionts);
+      if (UserStore.state.linebot.status == 200) {
+       
+      }else if (UserStore.state.linebot.status == 400) {
+          alert("ไม่สามารถจับคู่ได้")
+          
+      }
     },
      catmatch: async function(cat_id,cat_sex) {
       if (!localStorage.access_token) {
@@ -375,7 +381,8 @@ export default {
       await UserStore.dispatch("catmatch", optionts);
       if (UserStore.state.catmatch.status == 200) {
         this.catmatchs = UserStore.state.catmatch.catmatch;
-      }else if (UserStore.state.viewcat.status == 400) {
+      }else if (UserStore.state.catmatch.status == 400) {
+          alert("ไม่สามารถจับคู่ได้")
           
       }
     },
