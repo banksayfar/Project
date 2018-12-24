@@ -222,6 +222,147 @@
                     </div>
                   </div>
                   <div class="panel panel-default panel-rose">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <a
+                        class="collapsed"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordion"
+                        href="#collapsecolorvaccine"
+                        aria-expanded="false"
+                        aria-controls="collapsecolor"
+                      >
+                        <h4 class="panel-title">การฉีดวัคซีน</h4>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </a>
+                    </div>
+                    <div
+                      id="collapsecolorvaccine"
+                      class="panel-collapse collapse"
+                      role="tabpanel"
+                      aria-labelledby="headingOne"
+                    >
+                      <div class="panel-body">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="all" v-model="search.cat_vaccine" data-toggle="checkbox" checked>
+                            All
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="ฉีด" v-model="search.cat_vaccine" data-toggle="checkbox">
+                            ฉีด
+                          </label>
+                        </div>
+
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="ไม่ฉีด" v-model="search.cat_vaccine" data-toggle="checkbox">
+                            ไม่ฉีด
+                          </label>
+                        </div>
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default panel-rose">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <a
+                        class="collapsed"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordion"
+                        href="#collapsecolorregispet"
+                        aria-expanded="false"
+                        aria-controls="collapsecolor"
+                      >
+                        <h4 class="panel-title">ใบเพ็ด</h4>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </a>
+                    </div>
+                    <div
+                      id="collapsecolorregispet"
+                      class="panel-collapse collapse"
+                      role="tabpanel"
+                      aria-labelledby="headingOne"
+                    >
+                      <div class="panel-body">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="all" v-model="search.cat_regispet" data-toggle="checkbox" checked>
+                            All
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="มี" v-model="search.cat_regispet" data-toggle="checkbox">
+                            มี
+                          </label>
+                        </div>
+
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="ไม่" v-model="search.cat_regispet" data-toggle="checkbox">
+                            ไม่มี
+                          </label>
+                        </div>
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>   
+                  <div class="panel panel-default panel-rose">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <a
+                        class="collapsed"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordion"
+                        href="#collapsecolorexpenses"
+                        aria-expanded="false"
+                        aria-controls="collapsecolor"
+                      >
+                        <h4 class="panel-title">ข้อตกลงในการจับคู่</h4>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </a>
+                    </div>
+                    <div
+                      id="collapsecolorexpenses"
+                      class="panel-collapse collapse"
+                      role="tabpanel"
+                      aria-labelledby="headingOne"
+                    >
+                      <div class="panel-body">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="all" v-model="search.cat_expenses" data-toggle="checkbox" checked>
+                            All
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="ฟรี" v-model="search.cat_expenses" data-toggle="checkbox">
+                            ฟรี
+                          </label>
+                        </div>
+
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="จ่ายเงิน" v-model="search.cat_expenses" data-toggle="checkbox">
+                           จ่ายเงิน
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="แบ่งลูก" v-model="search.cat_expenses" data-toggle="checkbox">
+                            แบ่งลูก
+                          </label>
+                        </div>
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>   
+                  <div class="panel panel-default panel-rose">
                     <div class="panel-heading" role="tab" id="headingFour">
                       <a
                         class="collapsed"
@@ -433,6 +574,25 @@
                       <option value="เพศเมีย" @click="form.cat_sex = 'เพศเมีย'">เพศเมีย</option>
                     </select>
                   </div>
+                   <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="form.cat_regispet"
+                      data-style="select-with-transition"
+                      title="แมวคุณมีใบเพ็ดหรือไม่ !!"
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>แมวคุณมีใบเพ็ดหรือไม่ !!</option>
+                      <option value="มี" @click="form.cat_regispet = 'เพศผู้'">มี</option>
+                      <option value="ไม่มี" @click="form.cat_regispet = 'เพศเมีย'">ไม่มี</option>
+                    </select>
+                  </div>
+                  
+                  
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="material-icons">face</i>
@@ -466,6 +626,23 @@
                       placeholder="birthdate..."
                       v-model="form.cat_birthdate"
                     >
+                  </div>
+                   <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="form.cat_vaccine"
+                      data-style="select-with-transition"
+                      title="ฉีดวัคซีน.."
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>ฉีดวัคซีน..</option>
+                      <option value="ฉีด" @click="form.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
+                      <option value="ไม่ฉีด" @click="form.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
+                    </select>
                   </div>
                   <div class="input-group">
                     <span class="input-group-addon">
@@ -523,6 +700,25 @@
                       required
                     ></textarea>
                   </div>
+                   <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="form.cat_expenses"
+                      data-style="select-with-transition"
+                      title="ข้อตกลงในการจับคู่ !!"
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>ข้อตกลงในการจับคู่ !!</option>
+                      <option value="ฟรี" @click="form.cat_expenses = 'ฟรี'">ฟรี</option>
+                      <option value="จ่ายเงิน" @click="form.cat_expenses = 'จ่ายเงิน'">จ่ายเงิน</option>
+                      <option value="แบ่งลูก" @click="form.cat_expenses = 'แบ่งลูก'">แบ่งลูก</option>
+                    </select>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -560,6 +756,9 @@ export default {
         cat_sex: ["all"],
         cat_breed:["all"],
         cat_status:["all"],
+         cat_vaccine:["all"],
+          cat_regispet:["all"],
+           cat_expenses:["all"],
       },
       form: {
         cat_provinces: "กรุณาเลิอกจังหวัด",
@@ -567,6 +766,9 @@ export default {
         cat_sex: "กรุณาเลิอกเพศ",
         cat_birthdate: null,
         cat_breed: "กรุณาเลิอกสายพันธ์",
+        cat_vaccine :"แมวคุณฉีดวัคซีนหรือไม่ !!",
+        cat_regispet:"แมวคุณมีใบเพ็ดหรือไม่ !!",
+        cat_expenses:"ข้อตกลงในการจับคู่ !!",
         cat_img: [],
         cat_description: null,
         member_id: null
@@ -640,6 +842,7 @@ export default {
       if(this.form.cat_provinces=='กรุณาเลิอกจังหวัด'||
       this.form.cat_sex== 'กรุณาเลิอกเพศ' ||
       this.form.cat_breed== 'กรุณาเลิอกสายพันธ์'
+      
       ){
           alert('กรุณากรอกข้อมูลให้ครบถ้วน!!');
       }
@@ -657,6 +860,9 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
+          cat_vaccine :"ฉีดวัคซีน..",
+          cat_regispet:"แมวคุณมีใบเพ็ดหรือไม่ !!",
+          cat_expenses:"ข้อตกลงในการจับคู่ !!",
           cat_img: null,
           cat_habit: null,
           cat_description: null,

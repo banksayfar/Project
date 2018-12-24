@@ -67,54 +67,38 @@
                               </div>
                             </div>
                           </div>
-                          
-                            <div id="collapseTwo" class="panel-collapse collapse">
-                              <div class="panel-body">
-                              
-                              </div>
-                            </div>
-                          </div>
-                          <div class="panel panel-border panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-controls="collapseOne">
-                                    <h4 class="panel-title">
-                                    Review
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse">
-                              <div class="panel-body">
-                                <ul>
-                                     <li>Storm and midnight-blue stretch cotton-blend</li>
-                                     <li>Notch lapels, functioning buttoned cuffs, two front flap pockets, single vent, internal pocket</li>
-                                     <li>Two button fastening</li>
-                                     <li>84% cotton, 14% nylon, 2% elastane</li>
-                                     <li>Dry clean</li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-
+                        
+      
+</div>
                         </div>
                         </div><!--  end acordeon -->
-                    <div class="row pick-size">
+                    <div class="row pick-size " style="height 100%">
+                               
                             <div class="col-md-3 col-sm-3">
                               <label>สายพันธ์</label>
                             <p type="text" class="form-control">{{viewcat_s.breed_name}}</p>
                             </div>
                             <div class="col-md-3 col-sm-3">
+                              <label>การฉีดวัคซีน</label>
+                            <p type="text" class="form-control">{{viewcat_s.cat_vaccine}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                              <label>แมวคุณมีใบเพ็ดหรือไม่</label>
+                            <p type="text" class="form-control">{{viewcat_s.cat_regispet}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                              <label>ข้อตกลงในการจับคู่</label>
+                            <p type="text" class="form-control">{{viewcat_s.cat_expenses}}</p>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
                                 <label>จังหวัด</label>
                                    <p type="text" class="form-control">{{viewcat_s.name_th}}</p>
                             </div>
-                           
                             <div class="col-md-3 col-sm-3">
-                                 <br>
                                  <label>อายุ</label>
                                <p type="text" class="form-control">{{viewcat_s.age}}</p>
                             </div>
                             <div class="col-md-3 col-sm-3">
-                                 <br>
                                  <label>เพศ</label>
                                <p type="text" class="form-control">{{viewcat_s.cat_sex}}</p>
                             </div>

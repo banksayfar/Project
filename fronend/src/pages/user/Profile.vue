@@ -39,7 +39,7 @@
               </div>
 
               <div class="description text-center">
-              <!-- <p>An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p> -->
+                <!-- <p>An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p> -->
               </div>
               <div class="row">
                 <div class="col-md-6 col-md-offset-3">
@@ -49,7 +49,9 @@
                         <li class="active">
                           <a href="#work" role="tab" data-toggle="tab">
                             <i class="material-icons">palette</i>
-                            REVIEW
+
+                            
+                            HISYORY
                           </a>
                         </li>
                         <li>
@@ -58,12 +60,7 @@
                             My_Cat
                           </a>
                         </li>
-                        <li>
-                          <a href="#media" role="tab" data-toggle="tab">
-                            <i class="material-icons">camera</i>
-                            Media
-                          </a>
-                        </li>
+                       
                       </ul>
                     </div>
                   </div>
@@ -74,36 +71,27 @@
                 <div class="tab-pane active work" id="work">
                   <div class="row">
                     <div class="col-md-7 col-md-offset-1">
-                      <h4 class="title">Review</h4>
-                      <div class="row collections">
-                        <div  class="col-md-5">
-                          
-                           <router-link :to="'/product/'+querycatmacths.cat_id" >
-                          <div
-                            class="card card-background"
-                          >
-                          
-                          <img :src="querycatmacths.base64" style="width:100%;height: 200px;" alt="">
-                          
-                          </div>
-                            </router-link>
-                         
+                      <h4 class="title">History</h4>
+                      <div v-if="this.show  = true" class="row collections">
+                        <div align="center" class="col-md-5">
+                          <router-link :to="'/product/'+querycatmacths.cat_id">
+                            <img
+                              :src="querycatmacths.base64"
+                              style="width:200px;height: 150px;"
+                              alt
+                            >
+                            <h4 class="card-title">{{querycatmacths.cat_name}}</h4>
+                          </router-link>
                         </div>
-                        <div class="col-md-2">
-                          <br><br><br>
-                             <h1 style="color:red;">VS</h1>
+                        <div class="col-md-2" align="center">
+                          <br>
+                          <h2 style="color:red;">VS</h2>
                         </div>
-                        <div  class="col-md-5">
-                          <router-link :to="'/product/'+querycats.cat_id" >
-                          <div
-                            class="card card-background"
-                          >
-                          
-                          <img :src="querycats.base64" style="width:100%;height: 200px;" alt="">
-                          
-                          </div>
-                            </router-link>
-                         
+                        <div align="center" class="col-md-5">
+                          <router-link :to="'/product/'+querycats.cat_id">
+                            <img :src="querycats.base64" style="width:200px;height: 150px;" alt>
+                            <h4 class="card-title">{{querycatmacths.cat_name}}</h4>
+                          </router-link>
                         </div>
                       </div>
                     </div>
@@ -116,14 +104,15 @@
                         <li>
                           <b>10</b> &nbsp;&nbsp; Cat's
                         </li>
-                      </ul> -->
+                      </ul>-->
                       <hr>
                       <h4 class="title">About his status</h4>
                       <p class="description">{{user.member_status}}</p>
                       <hr>
                       <h4 class="title">Contact</h4>
                       <p>Tel : &nbsp;{{user.member_phone}}</p>
-                      <p>FB : &nbsp;
+                      <p>
+                        FB : &nbsp;
                         <a :href="user.urlfacebook" target="_blank">{{user.facebook}}</a>
                       </p>
 
@@ -167,19 +156,6 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane text-center gallery" id="media">
-                  <div class="row">
-                    <div class="col-md-3 col-md-offset-3">
-                      <img src="assets/img/examples/chris4.jpg" class="img-rounded">
-                      <img src="assets/img/examples/chris6.jpg" class="img-rounded">
-                    </div>
-                    <div class="col-md-3">
-                      <img src="assets/img/examples/chris7.jpg" class="img-rounded">
-                      <img src="assets/img/examples/chris5.jpg" class="img-rounded">
-                      <img src="assets/img/examples/chris9.jpg" class="img-rounded">
                     </div>
                   </div>
                 </div>
@@ -292,8 +268,10 @@
                     <textarea
                       type="text"
                       class="form-control"
+                      placeholder="รายละเอียด..."
                       v-model="user.member_status"
-                      value="user.member_status"
+                      rows="6"
+                      required
                     ></textarea>
                   </div>
                 </div>
@@ -368,6 +346,24 @@
                     <span class="input-group-addon">
                       <i class="material-icons">face</i>
                     </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="form.cat_regispet"
+                      data-style="select-with-transition"
+                      title="แมวคุณมีใบเพ็ดหรือไม่ !!"
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>แมวคุณมีใบเพ็ดหรือไม่ !!</option>
+                      <option value="มี" @click="form.cat_regispet = 'เพศผู้'">มี</option>
+                      <option value="ไม่มี" @click="form.cat_regispet = 'เพศเมีย'">ไม่มี</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
                     
                     <select
                       class="form-control"
@@ -397,6 +393,23 @@
                       placeholder="birthdate..."
                       v-model="form.cat_birthdate"
                     >
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="form.cat_vaccine"
+                      data-style="select-with-transition"
+                      title="ฉีดวัคซีน.."
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>ฉีดวัคซีน..</option>
+                      <option value="เพศผู้" @click="form.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
+                      <option value="เพศเมีย" @click="form.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
+                    </select>
                   </div>
                   <div class="input-group">
                     <span class="input-group-addon">
@@ -440,7 +453,26 @@
                   </div>
                 </div>
 
+
                 <div class="col-md-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="form.cat_expenses"
+                      data-style="select-with-transition"
+                      title="ข้อตกลงในการจับคู่ !!"
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>ข้อตกลงในการจับคู่ !!</option>
+                      <option value="ฟรี" @click="form.cat_expenses = 'ฟรี'">ฟรี</option>
+                      <option value="จ่ายเงิน" @click="form.cat_expenses = 'จ่ายเงิน'">จ่ายเงิน</option>
+                      <option value="แบ่งลูก" @click="form.cat_expenses = 'แบ่งลูก'">แบ่งลูก</option>
+                    </select>
+                  </div>
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="material-icons">face</i>
@@ -454,6 +486,7 @@
                       required
                     ></textarea>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -468,8 +501,6 @@
         </div>
       </div>
     </div>
-    <!-- end notice modal -->
-    <!-- notice modal -->
     <div
       class="modal fade"
       id="Editcat"
@@ -517,7 +548,7 @@
                       data-size="7"
                       tabindex="-98"
                     >
-                      <option selected disabled>กรุณาเลิอกสายพันธ์</option>
+                      <option selected disabled>กรุณาเลิอกเพศ</option>
                       <option value="เพศผู้" @click="form.cat_sex = 'เพศผู้'">เพศผู้</option>
                       <option value="เพศเมีย" @click="form.cat_sex = 'เพศเมีย'">เพศเมีย</option>
                     </select>
@@ -526,6 +557,25 @@
                     <span class="input-group-addon">
                       <i class="material-icons">face</i>
                     </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="edit.cat_regispet"
+                      data-style="select-with-transition"
+                      title="แมวคุณมีใบเพ็ดหรือไม่ !!"
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>แมวคุณมีใบเพ็ดหรือไม่ !!</option>
+                      <option value="มี" @click="form.cat_regispet = 'เพศผู้'">มี</option>
+                      <option value="ไม่มี" @click="form.cat_regispet = 'เพศเมีย'">ไม่มี</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    
                     <select
                       class="form-control"
                       v-model="edit.cat_provinces"
@@ -560,6 +610,23 @@
                       <i class="material-icons">face</i>
                     </span>
                     <select
+                      class="form-control datetimepicker"
+                      v-model="edit.cat_vaccine"
+                      data-style="select-with-transition"
+                      title="ฉีดวัคซีน.."
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>ฉีดวัคซีน..</option>
+                      <option value="เพศผู้" @click="form.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
+                      <option value="เพศเมีย" @click="form.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
                       class="form-control"
                       v-model="edit.cat_breed"
                       data-style="select-with-transition"
@@ -582,7 +649,7 @@
                     </span>
 
                     <div class="form-group form-file-upload">
-                      <input type="file" @change="onFileChangedEdit" multiple>
+                      <input type="file" @change="onFileChanged" multiple>
 
                       <div class="input-group">
                         <input
@@ -594,11 +661,6 @@
                         >
                       </div>
                     </div>
-
-                    <!-- <div class="form-group form-file-upload"> 
-                        <input type="file" @change="onFileChangedEdit" readonly="" class="form-control" placeholder="Simple chooser..."  multiple>
-                               
-                    </div>-->
                   </div>
                 </div>
                 <div class="input-group">
@@ -626,10 +688,28 @@
                       type="text"
                       class="form-control"
                       placeholder="รายละเอียด..."
-                      v-model="edit.cat_description"
+                      v-model="form.cat_description"
                       rows="6"
                       required
                     ></textarea>
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <select
+                      class="form-control datetimepicker"
+                      v-model="edit.cat_expenses"
+                      data-style="select-with-transition"
+                      title="ข้อตกลงในการจับคู่ !!"
+                      data-size="7"
+                      tabindex="-98"
+                    >
+                      <option selected disabled>ข้อตกลงในการจับคู่ !!</option>
+                      <option value="ฟรี" @click="form.cat_expenses = 'ฟรี'">ฟรี</option>
+                      <option value="จ่ายเงิน" @click="form.cat_expenses = 'จ่ายเงิน'">จ่ายเงิน</option>
+                      <option value="แบ่งลูก" @click="form.cat_expenses = 'แบ่งลูก'">แบ่งลูก</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -647,6 +727,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import UserStore from "@/stores/UserStore";
 import router from "@/router";
@@ -655,18 +736,22 @@ export default {
   components: {},
   data() {
     return {
+      show: false,
       provinces: [],
       catbreed: [],
       user: [],
       mycat_s: [],
-      querycatmacths :[],
-      querycats :[],
+      querycatmacths: [],
+      querycats: [],
       form: {
         cat_provinces: "กรุณาเลิอกจังหวัด",
         cat_name: null,
         cat_sex: "กรุณาเลิอกเพศ",
         cat_birthdate: null,
         cat_breed: "กรุณาเลิอกสายพันธ์",
+        cat_vaccine: "ฉีดวัคซีน..",
+        cat_regispet: "แมวคุณมีใบเพ็ดหรือไม่ !!",
+        cat_expenses: "ข้อตกลงในการจับคู่ !!",
         cat_img: null,
         cat_habit: null,
         cat_description: null,
@@ -680,6 +765,9 @@ export default {
         cat_breed: null,
         cat_img: null,
         cat_habit: null,
+        cat_vaccine: null,
+        cat_regispet: null,
+        cat_expenses: null,
         cat_description: null,
         member_id: null
       }
@@ -819,6 +907,7 @@ export default {
         router.push("/logout");
       }
     },
+    // sss
     mycat: async function() {
       if (!localStorage.access_token) router.push("/");
       let optionts = {
@@ -848,7 +937,10 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
-          cat_img: {},
+          cat_vaccine: "ฉีดวัคซีน..",
+          cat_regispet: "แมวคุณมีใบเพ็ดหรือไม่ !!",
+          cat_expenses: "ข้อตกลงในการจับคู่ !!",
+          cat_img: null,
           cat_habit: null,
           cat_description: null,
           member_id: null
@@ -901,18 +993,18 @@ export default {
         router.push("/logout");
       }
     },
-     showreview: async function() {
+    showreview: async function() {
       if (!localStorage.access_token);
       let optionts = {
-        access_token: localStorage.access_token,
+        access_token: localStorage.access_token
       };
       await UserStore.dispatch("showreview", optionts);
       if (UserStore.state.showreview.status == 200) {
-          this.querycatmacths = UserStore.state.showreview.querycatmacth;
-         this.querycats = UserStore.state.showreview.querycat
-        console.log(UserStore.state.show_editcat.data);
+        this.show = true;
+        this.querycatmacths = UserStore.state.showreview.querycatmacth;
+        this.querycats = UserStore.state.showreview.querycat;
+        console.log(UserStore.state.showreview.data);
       } else if (UserStore.state.showreview.status == 400) {
-        router.push("/");
       }
     }
   },
@@ -922,7 +1014,7 @@ export default {
     await this.getUser();
     await this.mycat();
     await this.getFromsearch();
-     await this.showreview();
+    await this.showreview();
     $(document).ready(function() {
       //บนสุด
       window.scrollTo(0, 0);

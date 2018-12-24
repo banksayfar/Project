@@ -38,6 +38,9 @@ class Cat_model extends CI_Model
 				'cat_birthdate' => $data_insert->form->cat_birthdate,
 				'cat_sex' => $data_insert->form->cat_sex,
 				'cat_breed' => $data_insert->form->cat_breed,
+				'cat_vaccine'=> $data_insert->form->cat_vaccine,
+				'cat_regispet'=> $data_insert->form->cat_regispet,
+				'cat_expenses'=> $data_insert->form->cat_expenses,
 				'cat_provinces' => $data_insert->form->cat_provinces,
 				'cat_status' => 'ว่าง',
 				'cat_description' => $data_insert->form->cat_description,
@@ -129,6 +132,9 @@ class Cat_model extends CI_Model
 		if ($data->search->cat_sex[0] != 'all') $this->db->where_in('cat_sex', $data->search->cat_sex);
 		if ($data->search->cat_breed[0] != 'all') $this->db->where_in('cat_breed', $data->search->cat_breed);
 		if ($data->search->cat_status[0] != 'all') $this->db->where_in('cat_status', $data->search->cat_status);
+		if ($data->search->cat_vaccine[0] != 'all') $this->db->where_in('cat_vaccine', $data->search->cat_vaccine);
+		if ($data->search->cat_regispet[0] != 'all') $this->db->where_in('cat_regispet', $data->search->cat_regispet);
+		if ($data->search->cat_expenses[0] != 'all') $this->db->where_in('cat_expenses', $data->search->cat_expenses);
 		if ($type == 'showcat') {
 			$path = ($page * 9) - 9;
 			$query = $this->db->GROUP_BY('cat_img.cat_id')->limit(9, $path)->order_by("cat.cat_id", "DESC")->get();
@@ -283,6 +289,9 @@ class Cat_model extends CI_Model
 				'cat_sex' => $data_update->edit->cat_sex,
 				'cat_provinces' => $data_update->edit->cat_provinces,
 				'cat_birthdate' => $data_update->edit->cat_birthdate,
+				'cat_vaccine'=> $data_update->edit->cat_vaccine,
+				'cat_regispet'=> $data_update->edit->cat_regispet,
+				'cat_expenses'=> $data_update->edit->cat_expenses,
 				'cat_breed' => $data_update->edit->cat_breed,
 				'cat_description' => $data_update->edit->cat_description,
 			);
@@ -308,13 +317,17 @@ class Cat_model extends CI_Model
 		}
 	}
 	
-	public function showreview($member_id)
+	public function showreview($member_id= 0)
 	{	
 		$data =array(
 		'member_id'=>$member_id,
-		'matching_status'=> 2
+		'matching_status'=> 1
 		);
-		$query = $this->db->select('*')->from('matching')->where($data)->get();
+		$datas =array(
+			'membermatch_id'=>$member_id,
+			'matching_status'=> 1
+		);
+		$query = $this->db->select('*')->from('matching')->where($data)->or_where($datas)->get();
 		$check = $query->result()[0];
 		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->cat_id)->GROUP_BY('cat_img.cat_id', 'cat_id')->get();
 		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->catmatch_id)->GROUP_BY('cat_img.cat_id', 'cat_id')->get();
