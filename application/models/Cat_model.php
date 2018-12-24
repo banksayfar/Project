@@ -9,10 +9,23 @@ class Cat_model extends CI_Model
 		// INNER JOIN cat_breed ON cat.cat_breed =cat_breed.catbreed_id 
 		// INNER JOIN provinces ON cat.cat_provinces = provinces.id
 		// INNER JOIN cat_img ON cat.cat_id = cat_img.cat_id
+		$data =array(
+			'cat_id'=>$id,
+			'matching_status'=> 1
+			);
+			$datas =array(
+				'catmatch_id'=>$id,
+				'matching_status'=> 1
+			);
+		// $querym = $this->db->select('*')->from('matching')->where($data)->or_where($datas)->get();
+		//$datamacth = array('', 'matching.catmatch_id');,'matching.catmatch_id'
+		$querym = $this->db->select('*')->from('matching')->join('cat','cat.cat_id = matching.catmatch_id')->where($datas)->where_in($data)->get();
+		$queryma = $this->db->select('*')->from('matching')->join('cat','cat.cat_id = matching.cat_id')->where($datas)->where_in($data)->get();
 		$this->db->select('*');
 		$this->db->from('cat');
 		$this->db->join('cat_breed', 'cat.cat_breed = cat_breed.catbreed_id');
 		$this->db->join('provinces', 'cat.cat_provinces = provinces.id');
+		$this->db->join('member', 'cat.member_id = member.member_id');
 		$this->db->where('cat_id', $id);
 		$query = $this->db->get();
 		$this->db->select('*');
@@ -21,6 +34,8 @@ class Cat_model extends CI_Model
 		$queryimg = $this->db->get();
 		if ($query->num_rows() > 0) {
 			$query->result()[0]->cat_imgs = $queryimg->result();
+			$query->result()[0]->catmatch0 =$querym->result();
+			$query->result()[0]->catmatch1 =$queryma->result();
 			return $query->result()[0];
 
 		} else {
@@ -319,17 +334,18 @@ class Cat_model extends CI_Model
 	public function showreview($member_id= 0)
 	{	
 		$data =array(
-		'member_id'=>$member_id,
-		'matching_status'=> 1
+		'matching.member_id'=>$member_id,
+		'matching.matching_status'=> 1
 		);
 		$datas =array(
-			'membermatch_id'=>$member_id,
-			'matching_status'=> 1
+			'matching.membermatch_id'=>$member_id,
+			'matching.matching_status'=> 1
 		);
-		$query = $this->db->select('*')->from('matching')->where($data)->or_where($datas)->get();
-		$check = $query->result()[0];
-		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->cat_id)->get();
-		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check->catmatch_id)->get();
+		$query = $this->db->select('*')->from('matching')->join('cat', 'cat.cat_id = matching.cat_id','matching.catmacth_id')->where($data)->or_where($datas)->get();
+		$check = $query->result();
+
+		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check[0]->cat_id)->get();
+		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check[0]->catmatch_id)->get();
 		if ($query->num_rows() > 0) {
 			return array('status' => true,
 			'querycat' =>$querycat->result()[0],
@@ -338,4 +354,6 @@ class Cat_model extends CI_Model
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
 	}
+	
+	
 }

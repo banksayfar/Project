@@ -138,7 +138,7 @@
                      -->
                     
                         
-                                    <li>
+                                    <li  v-if="user.member_id != null">
                                        <router-link to="/Profile">
                                                  <i class="material-icons">account_circle</i>
                                             Profile
@@ -165,7 +165,7 @@
                                             <router-link to="/profile">Me</router-link>
                                         </li>
                                         <li>
-                                            <a href="">Settings and other stuff</a>
+                                           
                                         </li>
                                         <li class="dividerdivider"></li>
                                         <li><a href="/logout">Sign out</a></li>
@@ -175,9 +175,9 @@
                     
                     <li v-else>
                     
-                            <button  target="_blank" class="btn btn-rose btn-round" data-toggle="modal" data-target="#loginModal">
+                             <a :href="linklinelogin"   target="_blank" class="btn btn-rose btn-round" >
                                <i class="material-icons">lock</i> login
-                            </button>
+                            </a>
 
                     </li>
                     

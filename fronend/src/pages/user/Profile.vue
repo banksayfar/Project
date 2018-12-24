@@ -196,20 +196,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      style="color:red"
-                      v-model="user.member_userid"
-                      value="user.member_userid"
-                      disabled
-                      required
-                    >
-                  </div>
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">face</i>
-                    </span>
-                    <input
-                      type="text"
-                      class="form-control"
+                      placeholder="กรุณากรอกชื่อ..."
                       v-model="user.member_displayname"
                       value="user.member_displayname"
                       required
@@ -222,6 +209,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      placeholder="กรุณากรอกหมายเลขโทรศัพท์..."
                       v-model="user.member_phone"
                       value="user.member_phone"
                       required
@@ -234,6 +222,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      placeholder="กรุณากรอกชื่อเฟสบุค..."
                       v-model="user.facebook"
                       value="user.facebook"
                       required
@@ -244,6 +233,7 @@
                     <input
                       type="url"
                       class="form-control"
+                      placeholder="กรุณากรอกลิงค์เฟสบุค..."
                       v-model="user.urlfacebook"
                       value="user.urlfacebook"
                       required
@@ -256,6 +246,7 @@
                     <input
                       type="text"
                       class="form-control"
+                       placeholder="กรุณากรอกไอดีไลน์..."
                       v-model="user.line"
                       value="user.line"
                       required

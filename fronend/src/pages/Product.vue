@@ -3,7 +3,6 @@
 <div class="product-page">
     <div class="page-header header-filter" data-parallax="true" filter-color="rose" style="background-image: url('/assets/img/bg6.jpg');">
     </div>
-
     <div class="section section-gray">
         <div class="container">
             <div class="main main-raised main-product ">
@@ -13,15 +12,6 @@
                             <div v-for="viewcat in viewcat_s.cat_imgs" :key="viewcat.id" :class="'tab-pane '+(viewcat_s.cat_imgs[0].id == viewcat.id ? 'active':'')"  :id="'product-page'+viewcat.id">
                                 <img :src="viewcat.base64" class="catimgs"/>
                             </div>
-                              <!-- <div class="tab-pane active " id="product-page2">
-                                  <img src="/assets/img/cat/A2.jpg" class="catimgs"/>
-                             </div>
-                              <div class="tab-pane " id="product-page3">
-                                  <img src="/assets/img/cat/A3.jpg"   class="catimgs"/>
-                              </div>
-                              <div class="tab-pane " id="product-page4">
-                                  <img src="/assets/img/cat/A4.jpg"  class="catimgs"/>
-                              </div> -->
                         </div>
                         <ul class="nav flexi-nav " role="tablist" id="flexiselDemo1">
                             <li v-for="viewcat in viewcat_s.cat_imgs" :key="viewcat.id" :class="(viewcat_s.cat_imgs[0].id == viewcat.id ? 'active':'')">
@@ -29,26 +19,10 @@
                                     <img :src="viewcat.base64" class="catimg"/>
                                 </a>
                             </li>
-                            <!-- <li class="active">
-                                <a href="#product-page2" role="tab" data-toggle="tab" aria-expanded="false">
-                                    <img src="/assets/img/cat/A2.jpg" class="catimg"/>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#product-page3" role="tab" data-toggle="tab" aria-expanded="false">
-                                    <img src="/assets/img/cat/A3.jpg" class="catimg" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#product-page4" role="tab" data-toggle="tab" aria-expanded="true">
-                                    <img src="/assets/img/cat/A4.jpg" class="catimg"/>
-                                </a>
-                            </li> -->
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <h2 class="title"> {{viewcat_s.cat_name}} </h2>
-                        <!-- <h3 class="main-price">$335</h3> -->
                         <div id="acordeon">
                             <div class="panel-group" id="accordion">
                           <div class="panel panel-border panel-default">
@@ -63,32 +37,75 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                               <div class="panel-body">
                                 <p>
-                                        {{viewcat_s.cat_description}}</p>
+                                        {{viewcat_s.cat_description}} </p>
+                                        
+                                <div class="col-md-4 col-sm-6">
+                              <label>การฉีดวัคซีน</label>
+                            <p type="text" class="form-control">{{viewcat_s.cat_vaccine}}</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                              <label>ใบรับรองพันธุ์ประวัติ</label>
+                            <p type="text" class="form-control">{{viewcat_s.cat_regispet}}</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                              <label>ข้อตกลงในการจับคู่</label>
+                            <p type="text" class="form-control">{{viewcat_s.cat_expenses}}</p>
+                            </div>
+                               
                               </div>
                             </div>
                           </div>
+                          <div class="panel panel-border panel-default">
+                            <div class="panel-heading" role="tab" id="heading">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse" aria-expanded="true" aria-controls="collapse">
+                                    <h4 class="panel-title">
+                                    ประวัติการจับคู่
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div id="collapse" class="panel-collapse collapse in">
+                                <div class="panel-body" v-for="viewcat1 in viewcat_s.catmatch1" :key="viewcat1.id">
+                               <div class="panel-body" v-for="viewcat in viewcat_s.catmatch0" :key="viewcat.id">
+                                <p>
                         
-      
-</div>
+                                        <a :href="'/product/'+viewcat.cat_id" target="_blank">{{viewcat.cat_name}}</a>
+                                        จับคู่กับ
+                                        <a :href="'/product/'+viewcat1.cat_id" target="_blank"> {{viewcat1.cat_name}}</a>
+                                </p>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-border panel-default">
+                            <div class="panel-heading" role="tab" id="heading">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseuser" aria-expanded="true" aria-controls="collapse">
+                                    <h4 class="panel-title">
+                                    รายละเอียดเจ้าของ
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div id="collapseuser" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                <p>
+                                       ชื่อ : {{viewcat_s.member_displayname}}</p>
+                                       <p> โทร :{{viewcat_s.member_phone}}</p>
+                                     <p>   Line :{{viewcat_s.line}}</p>
+                                
+                                       <a :href="viewcat_s.urlfacebook">Facebook :{{viewcat_s.facebook}}</a> 
+                                        
+                              </div>
+                            </div>
+                          </div>
+                           </div>
+                            </div>
                         </div>
-                        </div><!--  end acordeon -->
                     <div class="row pick-size " style="height 100%">
                                
                             <div class="col-md-3 col-sm-3">
                               <label>สายพันธ์</label>
                             <p type="text" class="form-control">{{viewcat_s.breed_name}}</p>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                              <label>การฉีดวัคซีน</label>
-                            <p type="text" class="form-control">{{viewcat_s.cat_vaccine}}</p>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                              <label>แมวคุณมีใบเพ็ดหรือไม่</label>
-                            <p type="text" class="form-control">{{viewcat_s.cat_regispet}}</p>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                              <label>ข้อตกลงในการจับคู่</label>
-                            <p type="text" class="form-control">{{viewcat_s.cat_expenses}}</p>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                 <label>จังหวัด</label>
@@ -110,174 +127,8 @@
                     </div>
                 </div>
             </div>
+  
 
-            <!-- <div class="features text-center">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="info">
-                            <div class="icon icon-info">
-                                <i class="material-icons">local_shipping</i>
-                            </div>
-                            <h4 class="info-title">2 Days Delivery </h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="info">
-                            <div class="icon icon-success">
-                                <i class="material-icons">verified_user</i>
-                            </div>
-                            <h4 class="info-title">Refundable Policy</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="info">
-                            <div class="icon icon-rose">
-                                <i class="material-icons">favorite</i>
-                            </div>
-                            <h4 class="info-title">Popular Item</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div> -->
-<!-- 
-            <div class="related-products">
-                <h3 class="title text-center">You may also be interested in:</h3>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="card card-product">
-                            <div class="card-image">
-                                <a href="#pablo">
-                                    <img class="img" src="/assets/img/examples/card-product1.jpg" />
-                                </a>
-                            </div>
-
-                            <div class="card-content">
-                                <h6 class="category text-rose">Trending</h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">Dolce & Gabbana</a>
-                                </h4>
-                                <div class="card-description">
-                                    Dolce & Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.
-                                </div>
-                                <div class="footer">
-                                    <div class="price">
-                                        <h4>$1,459</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <button type="button" rel="tooltip" title="Saved to Wishlist" class="btn btn-just-icon btn-simple btn-rose">
-                                            <i class="material-icons">favorite</i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="col-sm-6 col-md-3">
-                        <div class="card card-product">
-                            <div class="card-image">
-                                <a href="#pablo">
-                                    <img class="img" src="/assets/img/examples/card-product3.jpg" />
-                                </a>
-                            </div>
-
-                            <div class="card-content">
-                                <h6 class="category text-muted">Popular</h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">Balmain</a>
-                                </h4>
-                                <div class="card-description">
-                                    Balmain's mid-rise skinny jeans are cut with stretch to ensure they retain their second-skin fit but move comfortably.
-                                </div>
-                                <div class="footer">
-                                    <div class="price">
-                                        <h4>$459</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <button type="button" rel="tooltip" title="Save to Wishlist" class="btn btn-just-icon btn-simple btn-default">
-                                            <i class="material-icons">favorite</i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="col-sm-6 col-md-3">
-                        <div class="card card-product">
-                            <div class="card-image">
-                                <a href="#pablo">
-                                    <img class="img" src="/assets/img/examples/card-product4.jpg" />
-                                </a>
-                            </div>
-
-                            <div class="card-content">
-                                <h6 class="category text-muted">Popular</h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">Balenciaga</a>
-                                </h4>
-                                <div class="card-description">
-                                    Balenciaga's black textured-leather wallet is finished with the label's iconic 'Giant' studs. This is where you can...
-                                </div>
-                                <div class="footer">
-                                    <div class="price">
-                                        <h4>$590</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <button type="button" rel="tooltip" title="Saved to Wishlist" class="btn btn-just-icon btn-simple btn-rose">
-                                            <i class="material-icons">favorite</i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="col-sm-6 col-md-3">
-                        <div class="card card-product">
-                            <div class="card-image">
-                                <a href="#pablo">
-                                    <img class="img" src="/assets/img/examples/card-product2.jpg" />
-                                </a>
-                            </div>
-
-                            <div class="card-content">
-                                <h6 class="category text-rose">Trending</h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">Dolce & Gabbana</a>
-                                </h4>
-                                <div class="card-description">
-                                    Dolce & Gabbana's 'Greta' tote has been crafted in Italy from hard-wearing red textured-leather.
-                                </div>
-                                <div class="footer">
-                                    <div class="price">
-                                        <h4>$1,459</h4>
-                                    </div>
-                                    <div class="stats">
-                                        <button type="button" rel="tooltip" title="Save to Wishlist" class="btn btn-just-icon btn-simple btn-default">
-                                            <i class="material-icons">favorite</i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div> -->
-
-               
-            
         </div>
         <div class="modal fade" id="match" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-notice">
@@ -322,6 +173,7 @@ export default {
     return {
       viewcat_s: [],
       catmatchs:[],
+      viewcat_catmatch :[]
 
     };
   },
@@ -345,7 +197,8 @@ export default {
       };
       await UserStore.dispatch("viewcat", optionts);
       if (UserStore.state.viewcat.status == 200) {
-        this.viewcat_s = UserStore.state.viewcat.viewcat;
+        this.viewcat_s = UserStore.state.viewcat.viewcat
+        this.viewcat_catmatch= UserStore.state.viewcat.catmatch;
         
       } else if (UserStore.state.viewcat.status == 400) {
         router.push("/");
@@ -359,12 +212,6 @@ export default {
           catmatch_id :catmatch_id
       };
       await UserStore.dispatch("linebot", optionts);
-      if (UserStore.state.linebot.status == 200) {
-       
-      }else if (UserStore.state.linebot.status == 400) {
-          alert("ไม่สามารถจับคู่ได้")
-          
-      }
     },
      catmatch: async function(cat_id,cat_sex) {
       if (!localStorage.access_token) {
@@ -381,8 +228,7 @@ export default {
       await UserStore.dispatch("catmatch", optionts);
       if (UserStore.state.catmatch.status == 200) {
         this.catmatchs = UserStore.state.catmatch.catmatch;
-      }else if (UserStore.state.catmatch.status == 400) {
-          alert("ไม่สามารถจับคู่ได้")
+      }else if (UserStore.state.viewcat.status == 400) {
           
       }
     },

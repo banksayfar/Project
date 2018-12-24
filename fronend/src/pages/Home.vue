@@ -277,7 +277,7 @@
                         aria-expanded="false"
                         aria-controls="collapsecolor"
                       >
-                        <h4 class="panel-title">ใบเพ็ด</h4>
+                        <h4 class="panel-title">ใบรับรองพันธุ์ประวัติ</h4>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </a>
                     </div>
@@ -635,11 +635,11 @@
                       class="form-control datetimepicker"
                       v-model="form.cat_vaccine"
                       data-style="select-with-transition"
-                      title="ฉีดวัคซีน.."
+                      title="แมวคุณฉีดวัคซีนหรือไม่ !!"
                       data-size="7"
                       tabindex="-98"
                     >
-                      <option selected disabled>ฉีดวัคซีน..</option>
+                      <option selected disabled>แมวคุณฉีดวัคซีนหรือไม่ !!</option>
                       <option value="ฉีด" @click="form.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
                       <option value="ไม่ฉีด" @click="form.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
                     </select>
@@ -691,19 +691,6 @@
                     <span class="input-group-addon">
                       <i class="material-icons">face</i>
                     </span>
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      placeholder="รายละเอียด..."
-                      v-model="form.cat_description"
-                      rows="6"
-                      required
-                    ></textarea>
-                  </div>
-                   <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">face</i>
-                    </span>
                     <select
                       class="form-control datetimepicker"
                       v-model="form.cat_expenses"
@@ -718,6 +705,20 @@
                       <option value="แบ่งลูก" @click="form.cat_expenses = 'แบ่งลูก'">แบ่งลูก</option>
                     </select>
                   </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      placeholder="รายละเอียด..."
+                      v-model="form.cat_description"
+                      rows="6"
+                      required
+                    ></textarea>
+                  </div>
+                   
 
                 </div>
               </div>
@@ -860,8 +861,8 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
-          cat_vaccine :"ฉีดวัคซีน..",
-          cat_regispet:"แมวคุณมีใบเพ็ดหรือไม่ !!",
+          cat_vaccine :"แมวคุณฉีดวัคซีนหรือไม่ !!",
+          cat_regispet:"แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!",
           cat_expenses:"ข้อตกลงในการจับคู่ !!",
           cat_img: null,
           cat_habit: null,
