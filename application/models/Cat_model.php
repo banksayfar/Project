@@ -295,7 +295,6 @@ class Cat_model extends CI_Model
 	public function EditCat($cat_id = 0)
 	{
 		$data_update = json_decode(file_get_contents('php://input'));
-
 		if (is_object($data_update)) {
 			$data = array(
 				'cat_id' => $cat_id,
@@ -343,7 +342,7 @@ class Cat_model extends CI_Model
 		);
 		$query = $this->db->select('*')->from('matching')->join('cat', 'cat.cat_id = matching.cat_id','matching.catmacth_id')->where($data)->or_where($datas)->get();
 		$check = $query->result();
-
+		
 		$querycat = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check[0]->cat_id)->get();
 		$querycatmacth = $this->db->select('*')->from('cat')->join('cat_img', 'cat_img.cat_id = cat.cat_id')->where('cat.cat_id',$check[0]->catmatch_id)->get();
 		if ($query->num_rows() > 0) {

@@ -81,7 +81,7 @@
                             <div class="panel-heading" role="tab" id="heading">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseuser" aria-expanded="true" aria-controls="collapse">
                                     <h4 class="panel-title">
-                                    รายละเอียดเจ้าของ
+                                    ข้อมูลติดต่อ
                                     <i class="material-icons">keyboard_arrow_down</i>
                                     </h4>
                                 </a>
@@ -93,7 +93,7 @@
                                        <p> โทร :{{viewcat_s.member_phone}}</p>
                                      <p>   Line :{{viewcat_s.line}}</p>
                                 
-                                       <a :href="viewcat_s.urlfacebook">Facebook :{{viewcat_s.facebook}}</a> 
+                                      Facebook : <a :href="viewcat_s.urlfacebook">{{viewcat_s.facebook}}</a> 
                                         
                               </div>
                             </div>
@@ -215,10 +215,7 @@ export default {
     },
      catmatch: async function(cat_id,cat_sex) {
       if (!localStorage.access_token) {
-          
             alert('กรุณาเข้าสู้ระบบเพื่อจับคู่!!')
-            window.location="/product/"+cat_id
-            return;
         }
       let optionts = {
            access_token: localStorage.access_token,

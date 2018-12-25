@@ -72,8 +72,8 @@
                   <div class="row">
                     <div class="col-md-7 col-md-offset-1">
                       <h4 class="title">History</h4>
-                      <div v-if="this.show  = true" class="row collections">
-                        <div align="center" class="col-md-5">
+                      <div  class="row collections">
+                        <div v-if="this.show  = true" align="center" class="col-md-5">
                           <router-link :to="'/product/'+querycatmacths.cat_id">
                             <img
                               :src="querycatmacths.base64"
@@ -341,13 +341,14 @@
                       class="form-control datetimepicker"
                       v-model="form.cat_regispet"
                       data-style="select-with-transition"
-                      title="แมวคุณมีใบเพ็ดหรือไม่ !!"
+                      title="แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!"
+         
                       data-size="7"
                       tabindex="-98"
                     >
-                      <option selected disabled>แมวคุณมีใบเพ็ดหรือไม่ !!</option>
-                      <option value="มี" @click="form.cat_regispet = 'เพศผู้'">มี</option>
-                      <option value="ไม่มี" @click="form.cat_regispet = 'เพศเมีย'">ไม่มี</option>
+                      <option selected disabled>แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!</option>
+                      <option value="มี" @click="form.cat_regispet = 'มี'">มี</option>
+                      <option value="ไม่มี" @click="form.cat_regispet = 'ไม่มี'">ไม่มี</option>
                     </select>
                   </div>
 
@@ -393,11 +394,11 @@
                       class="form-control datetimepicker"
                       v-model="form.cat_vaccine"
                       data-style="select-with-transition"
-                      title="ฉีดวัคซีน.."
+                      title="แมวคุณฉีดวัคซีนหรือไม่ !!"
                       data-size="7"
                       tabindex="-98"
                     >
-                      <option selected disabled>ฉีดวัคซีน..</option>
+                      <option selected disabled>แมวคุณฉีดวัคซีนหรือไม่ !!</option>
                       <option value="เพศผู้" @click="form.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
                       <option value="เพศเมีย" @click="form.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
                     </select>
@@ -509,6 +510,7 @@
             <div class="header header-primary text-center">
               <h4 class="card-title">EDIT CAT</h4>
             </div>
+          
           </div>
           <div class="modal-body">
             <div class="instruction">
@@ -522,7 +524,8 @@
                       type="text"
                       class="form-control"
                       placeholder="Name..."
-                      v-model="edit.cat_name"
+                      :value="edit.cat_name"
+          
                       required
                     >
                   </div>
@@ -540,8 +543,8 @@
                       tabindex="-98"
                     >
                       <option selected disabled>กรุณาเลิอกเพศ</option>
-                      <option value="เพศผู้" @click="form.cat_sex = 'เพศผู้'">เพศผู้</option>
-                      <option value="เพศเมีย" @click="form.cat_sex = 'เพศเมีย'">เพศเมีย</option>
+                      <option value="เพศผู้" @click="edit.cat_sex = 'เพศผู้'">เพศผู้</option>
+                      <option value="เพศเมีย" @click="edit.cat_sex = 'เพศเมีย'">เพศเมีย</option>
                     </select>
                   </div>
                   <div class="input-group">
@@ -557,8 +560,8 @@
                       tabindex="-98"
                     >
                       <option selected disabled>แมวคุณมีใบเพ็ดหรือไม่ !!</option>
-                      <option value="มี" @click="form.cat_regispet = 'เพศผู้'">มี</option>
-                      <option value="ไม่มี" @click="form.cat_regispet = 'เพศเมีย'">ไม่มี</option>
+                      <option value="มี" @click="edit.cat_regispet = 'เพศผู้'">มี</option>
+                      <option value="ไม่มี" @click="edit.cat_regispet = 'เพศเมีย'">ไม่มี</option>
                     </select>
                   </div>
 
@@ -609,8 +612,8 @@
                       tabindex="-98"
                     >
                       <option selected disabled>ฉีดวัคซีน..</option>
-                      <option value="เพศผู้" @click="form.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
-                      <option value="เพศเมีย" @click="form.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
+                      <option value="ฉีด" @click="edit.cat_vaccine = 'ฉีด'">ฉีดวัคซีน</option>
+                      <option value="ไม่ฉีด" @click="edit.cat_vaccine = 'ไม่ฉีด'">ไม่ฉีดวัคซีน</option>
                     </select>
                   </div>
                   <div class="input-group">
@@ -640,7 +643,7 @@
                     </span>
 
                     <div class="form-group form-file-upload">
-                      <input type="file" @change="onFileChanged" multiple>
+                      <input type="file" @change="onFileChangedEdit" multiple>
 
                       <div class="input-group">
                         <input
@@ -679,7 +682,7 @@
                       type="text"
                       class="form-control"
                       placeholder="รายละเอียด..."
-                      v-model="form.cat_description"
+                      v-model="edit.cat_description"
                       rows="6"
                       required
                     ></textarea>
@@ -740,10 +743,10 @@ export default {
         cat_sex: "กรุณาเลิอกเพศ",
         cat_birthdate: null,
         cat_breed: "กรุณาเลิอกสายพันธ์",
-        cat_vaccine: "ฉีดวัคซีน..",
-        cat_regispet: "แมวคุณมีใบเพ็ดหรือไม่ !!",
-        cat_expenses: "ข้อตกลงในการจับคู่ !!",
-        cat_img: null,
+          cat_vaccine :"แมวคุณฉีดวัคซีนหรือไม่ !!",
+          cat_regispet:"แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!",
+          cat_expenses:"ข้อตกลงในการจับคู่ !!",
+        cat_img: {},
         cat_habit: null,
         cat_description: null,
         member_id: null
@@ -754,7 +757,7 @@ export default {
         cat_sex: null,
         cat_birthdate: null,
         cat_breed: null,
-        cat_img: null,
+        new_imgs: {},
         cat_habit: null,
         cat_vaccine: null,
         cat_regispet: null,
@@ -827,13 +830,7 @@ export default {
           //
           this.edit.new_imgs.push(fileInfo);
 
-          console.log("this.edit.cat_img", this.edit.cat_img);
-          // If all files have been proceed
-          // if(this.form.cat_img.length == files.length){
-          //   // Apply Callback function
-          //   if(this.multiple) this.done(this.form.cat_img)
-          //   else this.done(this.form.cat_img[0])
-          // }
+
         }; // reader.onload
       } // for
     }, // onChange()
@@ -867,14 +864,18 @@ export default {
     },
     EditCat: async function(cat_id) {
       if (!localStorage.access_token) router.push("/");
+      console.log("sss"+this.edit);
       let optionts = {
         access_token: localStorage.access_token,
         cat_id: cat_id,
         edit: this.edit
+       
+        
       };
-      console.log(optionts);
+       
+      
       await UserStore.dispatch("getEditCat", optionts);
-
+      
       if (UserStore.state.update.status == 200) {
         this.mycat();
       } else if (UserStore.state.EditCat.status == 400) {
@@ -898,7 +899,6 @@ export default {
         router.push("/logout");
       }
     },
-    // sss
     mycat: async function() {
       if (!localStorage.access_token) router.push("/");
       let optionts = {
@@ -914,8 +914,20 @@ export default {
     addCat: async function() {
       if (!localStorage.access_token) router.push("/");
       this.form.member_id = this.user.member_id;
+      console.log(this.form);
+      if(this.form.cat_provinces=='กรุณาเลิอกจังหวัด'||
+      this.form.cat_sex== 'กรุณาเลิอกเพศ' ||
+      this.form.cat_breed== 'กรุณาเลิอกสายพันธ์' ||
+      this.form.cat_vaccine =='แมวคุณฉีดวัคซีนหรือไม่ !!'||
+      this.form.cat_regispet=='แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!'||
+      this.form.cat_expenses == 'ข้อตกลงในการจับคู่ !!'||
+      this.form == null || this.form == undefined || this.form == ''
+      ){
+          alert('กรุณากรอกข้อมูลให้ครบถ้วน!!');
+          return;
+      }
       let optionts = {
-        access_token: localStorage.access_token,
+        access_token:localStorage.access_token,
         form: this.form
       };
       await UserStore.dispatch("addCat", optionts);
@@ -928,9 +940,9 @@ export default {
           cat_sex: "กรุณาเลิอกเพศ",
           cat_birthdate: null,
           cat_breed: "กรุณาเลิอกสายพันธ์",
-          cat_vaccine: "ฉีดวัคซีน..",
-          cat_regispet: "แมวคุณมีใบเพ็ดหรือไม่ !!",
-          cat_expenses: "ข้อตกลงในการจับคู่ !!",
+          cat_vaccine :"แมวคุณฉีดวัคซีนหรือไม่ !!",
+          cat_regispet:"แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!",
+          cat_expenses:"ข้อตกลงในการจับคู่ !!",
           cat_img: null,
           cat_habit: null,
           cat_description: null,
@@ -979,7 +991,8 @@ export default {
 
       if (UserStore.state.show_editcat.status == 200) {
         this.edit = UserStore.state.show_editcat.data;
-        console.log(UserStore.state.show_editcat.data);
+        console.log(this.edit);
+        
       } else if (UserStore.state.show_editcat.status == 400) {
         router.push("/logout");
       }
@@ -996,6 +1009,7 @@ export default {
         this.querycats = UserStore.state.showreview.querycat;
         console.log(UserStore.state.showreview.data);
       } else if (UserStore.state.showreview.status == 400) {
+        this.show = false;
       }
     }
   },

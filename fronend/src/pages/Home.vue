@@ -582,11 +582,11 @@
                       class="form-control datetimepicker"
                       v-model="form.cat_regispet"
                       data-style="select-with-transition"
-                      title="แมวคุณมีใบเพ็ดหรือไม่ !!"
+                      title="แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!"
                       data-size="7"
                       tabindex="-98"
                     >
-                      <option selected disabled>แมวคุณมีใบเพ็ดหรือไม่ !!</option>
+                      <option selected disabled>แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!</option>
                       <option value="มี" @click="form.cat_regispet = 'เพศผู้'">มี</option>
                       <option value="ไม่มี" @click="form.cat_regispet = 'เพศเมีย'">ไม่มี</option>
                     </select>
@@ -768,7 +768,7 @@ export default {
         cat_birthdate: null,
         cat_breed: "กรุณาเลิอกสายพันธ์",
         cat_vaccine :"แมวคุณฉีดวัคซีนหรือไม่ !!",
-        cat_regispet:"แมวคุณมีใบเพ็ดหรือไม่ !!",
+        cat_regispet:"แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!",
         cat_expenses:"ข้อตกลงในการจับคู่ !!",
         cat_img: [],
         cat_description: null,
@@ -842,10 +842,14 @@ export default {
       console.log(this.form);
       if(this.form.cat_provinces=='กรุณาเลิอกจังหวัด'||
       this.form.cat_sex== 'กรุณาเลิอกเพศ' ||
-      this.form.cat_breed== 'กรุณาเลิอกสายพันธ์'
-      
+      this.form.cat_breed== 'กรุณาเลิอกสายพันธ์' ||
+      this.form.cat_vaccine =='แมวคุณฉีดวัคซีนหรือไม่ !!'||
+      this.form.cat_regispet=='แมวคุณมีใบรับรองพันธุ์ประวัติหรือไม่ !!'||
+      this.form.cat_expenses == 'ข้อตกลงในการจับคู่ !!'||
+      this.form == null || this.form == undefined || this.form == ''
       ){
           alert('กรุณากรอกข้อมูลให้ครบถ้วน!!');
+          return;
       }
       let optionts = {
         access_token:localStorage.access_token,
