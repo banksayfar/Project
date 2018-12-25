@@ -234,11 +234,15 @@ class Cat_model extends CI_Model
 		if ($check->count_check != 0) {
 			return array('status' => false, 'msg' => 'Error Incorrect information.');
 		}
+		// 'date_time' =>  
+		$date_now = date('Y-m-d', time());
+
 		$data = array(
 			'member_id' => $member_id,
 			'membermatch_id' => $cat->member_id,
 			'cat_id' => $cat->cat_id,
 			'catmatch_id' => $catmatch->cat_id,
+			'date_match' =>  $date_now,
 			'matching_status' => 0
 		);
 		$this->db->insert('matching', $data);
